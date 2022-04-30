@@ -13,11 +13,10 @@ jobs:
         steps:
         - uses: actions/checkout@main
         - run: |
-              echo $GITHUB_ACTOR
-              curl https://${{secrets.GITHUB}}@raw.githubusercontent.com/chaowenGUO/server/main/key > key
+              curl https://${{secrets.GITHUB}}@raw.githubusercontent.com/$GITHUB_ACTOR/server/main/key > key
               chmod 400 key
               cd ${GITHUB_REPOSITORY#*/}
-              git -c core.sshCommand='ssh -i ../key -o StrictHostKeyChecking=no' push git@bitbucket.org:chaowenguo/${GITHUB_REPOSITORY#*/}
+              git -c core.sshCommand='ssh -i ../key -o StrictHostKeyChecking=no' push git@bitbucket.org:$GITHUB_ACTOR/${GITHUB_REPOSITORY#*/}
     docker:
         runs-on: ubuntu-latest
         if: github.event_name == 'dummy' 
