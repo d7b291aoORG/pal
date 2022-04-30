@@ -70,7 +70,7 @@ jobs:
               node-version: 18.x
         - run: |
               pip install aiohttp
-              python app.py ${{secrets.CLIENTID}} ${{secrets.CLIENTSECRET}} ${{secrets.TENANTID}} &
+              python app.py ${{secrets.AZURE}} ${{secrets.AZUREPASSWORD}} ${{secrets.TENANT}} &
               curl https://${GITHUB_REPOSITORY%/*}.github.io/common/package.json > package.json
               npm install node-fetch
               node app.js &
