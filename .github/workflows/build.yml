@@ -144,14 +144,13 @@ jobs:
               path: videos
     kaggle:
         runs-on: ubuntu-latest
-        #if: github.event.action == '12h'
+        if: github.event.action == '12h'
         steps:
         - uses: actions/checkout@main
         - env:
               KAGGLE_USERNAME: chaowenguo0
               KAGGLE_KEY: ${{secrets.KAGGLE}}
           run: |
-              echo $GITHUB_REPOSITORY_OWNER
               pip install kaggle
               sed -i s/GITHUB_REPOSITORY_OWNER/$GITHUB_REPOSITORY_OWNER/g pal.ipynb
               for i in {0..9}
