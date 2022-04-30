@@ -1,7 +1,7 @@
 import aiohttp, asyncio, argparse, os, base64, pathlib
 
 parser = argparse.ArgumentParser()
-for _ in ('clientid', 'clientsecret', 'tenantid'): parser.add_argument(_)
+for _ in ('azure', 'azurePassword', 'tenant'): parser.add_argument(_)
 args = parser.parse_args()
 subscription = '9046396e-e215-4cc5-9eb7-e25370140233'
 location = ('westus', 'westus2', 'eastus', 'eastus2', 'centralus', 'southcentralus', 'canadacentral', 'australiaeast', 'australiasoutheast', 'uksouth')
@@ -28,14 +28,14 @@ async def app(session, token, num):
     
 async def main():
     async with aiohttp.ClientSession() as session:
-        async with session.post(f'https://login.microsoftonline.com/{args.tenantid}/oauth2/token', data={'grant_type':'client_credentials', 'client_id':args.clientid, 'client_secret':args.clientsecret, 'resource':'https://management.azure.com/'}) as response:
+        async with session.post(f'https://login.microsoftonline.com/{args.tenantid}/oauth2/token', data={'grant_type':'client_credentials', 'client_id':args.azure, 'client_secret':args.azurePassword, 'resource':'https://management.azure.com/'}) as response:
             token = (await response.json()).get('access_token')
             await asyncio.gather(*(app(session, token, num) for num in range(10)))
 
 asyncio.run(main())
 
 #https://www.microsoftazuresponsorships.com/
-#az login --service-principal -u ${{secrets.CLIENTID}} -p ${{secrets.CLIENTSECRET}} --tenant ${{secrets.TENANTID}} #azure cloud shell#az ad sp create-for-rbac --role contributor --sdk-auth
+#az login --service-principal -u ${{secrets.AZURE}} -p ${{secrets.AZUREPASSWORD}} --tenant ${{secrets.TENANT}} #azure cloud shell#az ad sp create-for-rbac --role contributor --sdk-auth
 #readonly location=(westus westus2 eastus eastus2 centralus southcentralus canadacentral australiaeast australiasoutheast uksouth)
 #for i in ${!location[@]}
 #do
