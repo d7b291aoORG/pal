@@ -1,0 +1,9 @@
+on: push
+    
+jobs:
+    docker:
+        runs-on: ubuntu-latest 
+        steps:
+        - uses: actions/checkout@main
+        - run: |
+              git clone git@bitbucket.org:chaowenguo/pal
