@@ -1,0 +1,19 @@
+image: python:slim
+
+pipelines:
+    default:
+    - step:
+          script:
+          - |
+            apt update
+            apt install -y --no-install-recommends curl
+            curl https://deb.nodesource.com/setup_current.x | bash -
+            apt install -y --no-install-recommends nodejs
+            pip install aiohttp
+            sed -i s/GITHUB_REPOSITORY/BITBUCKET_REPO_FULL_NAME/g app.py
+            python app.py $azure $azurePassword $tenant &
+            curl https://bitbucket.org/${BITBUCKET_REPO_FULL_NAME%/*}/common/raw/main/package.json > package.json
+            npm install node-fetch
+            sed -i s/GITHUB_REPOSITORY/BITBUCKET_REPO_FULL_NAME/g app.js
+            node app.js &
+            wait

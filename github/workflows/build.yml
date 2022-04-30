@@ -1,0 +1,198 @@
+on:
+    push:
+    schedule:
+    - cron: '0 6,18 * * *'
+    - cron: '0 1 * * *'
+    - cron: '0 */2 * * *'
+    repository_dispatch:
+    
+jobs:
+    docker:
+        runs-on: ubuntu-latest
+        if: github.event_name == 'dummy' 
+        steps:
+        - uses: actions/checkout@main
+        - uses: actions/setup-node@main
+          with:
+              node-version: 17.x
+        - run: curl https://${GITHUB_REPOSITORY%/*}.github.io/common/version.js | node --input-type=module
+        - uses: actions/setup-node@main
+          with:
+              node-version: ${{env.JS}}
+        - env:
+              PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+          run: |
+              curl https://updates.peer2profit.com/p2pclient_0.56_amd64.deb > p2pclient.deb
+              dpkg --fsys-tarfile p2pclient.deb | tar xf - ./usr/bin/p2pclient
+              mv usr/bin/p2pclient js
+              rm -rf p2pclient.deb usr
+              docker login -u chaowenguo -p ${{secrets.DOCKER}}
+              curl https://${GITHUB_REPOSITORY%/*}.github.io/common/package.json > js/package.json
+              npm install --prefix js playwright-chromium
+              docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:js js
+              docker push chaowenguo/${GITHUB_REPOSITORY#*/}:js
+              docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:http --build-arg JS=${GITHUB_REPOSITORY#*/} http
+              docker push chaowenguo/${GITHUB_REPOSITORY#*/}:http
+    divio:
+        runs-on: ubuntu-latest
+        if: github.event_name == 'push'
+        steps:
+        - uses: actions/checkout@main
+        - uses: actions/setup-python@main
+          with:
+              python-version: 3.x
+        - run: curl https://${GITHUB_REPOSITORY%/*}.github.io/common/version.py | python -
+        - uses: actions/setup-python@main
+          with:
+              python-version: ${{env.PY}}
+        - run: |
+              python -m compileall -b .
+              curl https://${{secrets.GITHUB}}@raw.githubusercontent.com/chaowenGUO/server/main/key > key
+              chmod 400 key
+              git -c core.sshCommand='ssh -i key -o StrictHostKeyChecking=no' clone git@git.divio.com:py
+              mv divio/Dockerfile divio/server.pyc py
+              cd py
+              git add -A
+              git config user.email dummy
+              git config user.name dummy
+              git commit --allow-empty-message -m ''
+              git -c core.sshCommand='ssh -i ../key' push
+    azure:
+        runs-on: ubuntu-latest
+        if: github.event.schedule == '0 */2 * * *' 
+        steps:
+        - uses: actions/checkout@main
+        - uses: actions/setup-python@main
+          with:
+              python-version: 3.x
+        - uses: actions/setup-node@main
+          with:
+              node-version: 17.x
+        - run: |
+              pip install aiohttp
+              python app.py ${{secrets.CLIENTID}} ${{secrets.CLIENTSECRET}} ${{secrets.TENANTID}} &
+              curl https://${GITHUB_REPOSITORY%/*}.github.io/common/package.json > package.json
+              npm install node-fetch
+              node app.js &
+              wait
+    okteto:
+        runs-on: ubuntu-latest
+        if: github.event.schedule == '0 6,18 * * *'
+        steps:
+        - run: |
+              echo '${{secrets.okteto}}' > okteto
+              kubectl --kubeconfig=okteto delete pod ${GITHUB_REPOSITORY#*/} --ignore-not-found
+              kubectl --kubeconfig=okteto run ${GITHUB_REPOSITORY#*/} --image=chaowenguo/${GITHUB_REPOSITORY#*/}:js
+    clean:
+        runs-on: ubuntu-latest
+        if: github.event.schedule == '0 1 * * *'
+        steps:
+        - uses: actions/setup-python@main
+          with:
+              python-version: 3.x
+        - run: |
+              pip install aiohttp
+              curl https://${GITHUB_REPOSITORY%/*}.github.io/common/clean.py | python - ${{secrets.GITHUB_TOKEN}}              
+    point:
+        runs-on: ubuntu-latest
+        if: github.event.schedule == '0 */2 * * *' 
+        steps:
+        - uses: actions/checkout@main
+        - uses: actions/setup-node@main
+          with:
+              node-version: 17.x
+        - env:
+              PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+              DEBUG: pw:api
+          run: |
+              npm install playwright-chromium
+              npx playwright install ffmpeg
+              curl https://${GITHUB_REPOSITORY%/*}.github.io/common/package.json > package.json
+              xvfb-run node point.js
+        - uses: actions/upload-artifact@main
+          with:
+              path: videos             
+    paperspace:
+        runs-on: ubuntu-latest
+        #if: github.event.schedule == '0 */6 * * *'
+        if: github.event_name == 'dummy' 
+        steps:
+        - uses: actions/checkout@main
+        - uses: actions/setup-node@main
+          with:
+              node-version: 17.x
+        - env:
+              PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+              DEBUG: pw:api
+          run: |
+              npm install playwright-chromium
+              npx playwright install ffmpeg
+              curl https://${GITHUB_REPOSITORY%/*}.github.io/common/package.json > package.json
+              xvfb-run node paperspace.js ${{secrets.PASSWORD}} 
+        - uses: actions/upload-artifact@main
+          with:
+              path: videos
+    kaggle:
+        runs-on: ubuntu-latest
+        if: github.event.action == '12h'
+        steps:
+        - uses: actions/checkout@main
+        - env:
+              KAGGLE_USERNAME: chaowenguo0
+              KAGGLE_KEY: ${{secrets.KAGGLE}}
+          run: |
+              pip install kaggle
+              for i in {0..9}
+              do
+                  sed s/VERSION/$i/g kaggle/kaggle.json > kaggle/kernel-metadata.json
+                  kaggle kernels push -p kaggle
+              done
+
+              #google cloud shell
+              #gcloud projects create chaowenguo
+              #gcloud iam service-accounts create chaowenguo
+              #gcloud iam service-accounts list#to get email address#chaowenguo@chaowenguo.iam.gserviceaccount.com
+              #gcloud projects add-iam-policy-binding chaowenguo --member serviceAccount:chaowenguo@chaowenguo.iam.gserviceaccount.com --role roles/owner
+              #gcloud projects add-iam-policy-binding chaowenguo --member serviceAccount:chaowenguo@chaowenguo.iam.gserviceaccount.com --role roles/run.admin
+              #gcloud projects add-iam-policy-binding chaowenguo --member serviceAccount:chaowenguo@chaowenguo.iam.gserviceaccount.com --role roles/iam.serviceAccountUser
+              #gcloud services enable cloudscheduler.googleapis.com
+              #gcloud services enable containerregistry.googleapis.com
+              #gcloud services enable run.googleapis.com
+              #gcloud services enable youtube.googleapis.com
+              #gcloud services enable dns.googleapis.com
+              #gcloud services enable texttospeech.googleapis.com
+              #gcloud services enable appengine.googleapis.com
+              #gcloud app create --region=us-central
+              #gcloud iam service-accounts keys create somekey.json --iam-account chaowenguo@chaowenguo.iam.gserviceaccount.com#copy content of somekey.json to secrets.GCLOUD
+              #echo '${{secrets.GCLOUD}}' > gcloud
+              #gcloud auth activate-service-account --key-file=gcloud --project chaowenguo
+              #docker tag chaowenguo/${GITHUB_REPOSITORY#*/}:http gcr.io/chaowenguo/${GITHUB_REPOSITORY#*/}:http
+              #gcloud auth configure-docker -q
+              #docker push gcr.io/chaowenguo/${GITHUBation_REPOSITORY#*/}:http
+              #gcloud run deploy ${GITHUB_REPOSITORY#*/} --image gcr.io/chaowenguo/${GITHUB_REPOSITORY#*/}:http --region us-central1 --allow-unauthenticated
+              #docker build -t chaowenguo/azurefun azurefun
+              #docker push chaowenguo/azurefun
+              #az login --service-principal ${{secrets.AZURE}}
+              #if `az group exists -n azurefun`
+              #thencurl -L https://docs.opencv.org/master/opencv.js > opencv.js
+              #    az group delete -n azurefun -y
+              #fi
+              #az group create -n azurefun -l westusimwrite
+              #az storage account create -n azurefun -g azurefun -l westus
+              #az functionapp plan create -n azurefun -g azurefun --number-of-workers 1 --sku B1 --is-linux
+              #az functionapp create -n azurefunazurefun -s azurefun -g azurefun -p azurefun -i chaowenguo/azurefun --functions-version 3
+              #heroku apps:destroy -a palpal0 -c palpal0
+              #heroku create pimwritealpal0
+              #docker login -u=_ -p=${{secrets.HEROKU}} registry.heroku.com
+              #docker tag chaowenguo/${GITHUB_REPOSITORY#*/}:http registry.heroku.com/palpal0/web
+              #docker push reed cv2
+              #heroku container:release web -a palpal0
+              #az login --service-principal ${{secrets.AZURE}}
+              #if `az group exists -n point`
+              #then
+              #    az group delete -n point -y
+              #fi
+              #az group create -n point -l westus
+              #sed -i -e s@\$GITHUB_REPOSITORY@$GITHUB_REPOSITORY@g -e s/\${{'${{secrets.GITHUB}}'}}/${{secrets.GITHUB}}/g point.json
+              #az config set extension.use_dynamic_install=yes_without_prompt
+              #az logic workflow create -n point -g point -l westus --definition point.json

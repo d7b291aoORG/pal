@@ -1,0 +1,9 @@
+services:
+    pal:
+        image: chaowenguo/pal:http
+        ports:
+        - 80:80
+    peer2profit:
+        image: peer2profit/peer2profit_x86_64
+        environment:
+            P2P_EMAIL: chaowen.guo1@gmail.com
