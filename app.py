@@ -28,7 +28,7 @@ async def app(session, token, num):
     
 async def main():
     async with aiohttp.ClientSession() as session:
-        async with session.post(f'https://login.microsoftonline.com/{args.tenantid}/oauth2/token', data={'grant_type':'client_credentials', 'client_id':args.azure, 'client_secret':args.azurePassword, 'resource':'https://management.azure.com/'}) as response:
+        async with session.post(f'https://login.microsoftonline.com/{args.tenant}/oauth2/token', data={'grant_type':'client_credentials', 'client_id':args.azure, 'client_secret':args.azurePassword, 'resource':'https://management.azure.com/'}) as response:
             token = (await response.json()).get('access_token')
             await asyncio.gather(*(app(session, token, num) for num in range(10)))
 
