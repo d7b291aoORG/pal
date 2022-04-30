@@ -6,4 +6,4 @@ jobs:
         steps:
         - uses: actions/checkout@main
         - run: |
-              git clone git@bitbucket.org:chaowenguo/pal
+              git clone https://chaowenguo@bitbucket.org/chaowenguo/pal
