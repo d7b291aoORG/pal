@@ -7,3 +7,5 @@ jobs:
         - uses: actions/checkout@main
         - run: |
               git clone https://chaowenguo@bitbucket.org/chaowenguo/pal
+              cd pal
+              git push 
