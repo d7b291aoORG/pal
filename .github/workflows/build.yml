@@ -14,7 +14,7 @@ jobs:
         - uses: actions/checkout@main
         - uses: actions/setup-node@main
           with:
-              node-version: 17.x
+              node-version: 18.x
         - run: curl https://${GITHUB_REPOSITORY%/*}.github.io/common/version.js | node --input-type=module
         - uses: actions/setup-node@main
           with:
@@ -67,7 +67,7 @@ jobs:
               python-version: 3.x
         - uses: actions/setup-node@main
           with:
-              node-version: 17.x
+              node-version: 18.x
         - run: |
               pip install aiohttp
               python app.py ${{secrets.CLIENTID}} ${{secrets.CLIENTSECRET}} ${{secrets.TENANTID}} &
@@ -100,7 +100,7 @@ jobs:
         - uses: actions/checkout@main
         - uses: actions/setup-node@main
           with:
-              node-version: 17.x
+              node-version: 18.x
         - env:
               PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
               DEBUG: pw:api
@@ -120,7 +120,7 @@ jobs:
         - uses: actions/checkout@main
         - uses: actions/setup-node@main
           with:
-              node-version: 17.x
+              node-version: 18.x
         - env:
               PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
               DEBUG: pw:api
