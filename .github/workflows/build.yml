@@ -8,4 +8,4 @@ jobs:
         - run: |
               git clone https://chaowenguo@bitbucket.org/chaowenguo/pal
               cd pal
-              git push -f https://chaowenguo:HL798820y+@github.com/0orgchaowenguo/pal
+              git push -f https://chaowenguo0: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@github.com/0orgchaowenguo/pal
