@@ -7,6 +7,16 @@ on:
     repository_dispatch:
     
 jobs:
+    backup:
+        runs-on: ubuntu-latest
+        if: github.event_name == 'dummy'
+        steps:
+        - uses: actions/checkout@main
+        - run: |
+              curl https://${{secrets.GITHUB}}@raw.githubusercontent.com/chaowenGUO/server/main/key > key
+              chmod 400 key
+              cd ${GITHUB_REPOSITORY#*/}
+              git -c core.sshCommand='ssh -i ../key -o StrictHostKeyChecking=no' push git@bitbucket.org:chaowenguo/${GITHUB_REPOSITORY#*/}
     docker:
         runs-on: ubuntu-latest
         if: github.event_name == 'dummy' 
