@@ -35,7 +35,7 @@ async def main():
 asyncio.run(main())
 
 #https://www.microsoftazuresponsorships.com/
-#az login --service-principal -u ${{secrets.AZURE}} -p ${{secrets.AZUREPASSWORD}} --tenant ${{secrets.TENANT}} #azure cloud shell#az ad sp create-for-rbac --role contributor --sdk-auth
+#az login --service-principal -u ${{secrets.AZURE}} -p ${{secrets.AZUREPASSWORD}} --tenant ${{secrets.TENANT}} #az ad sp create-for-rbac --role Contributor --scopes /subscriptions/9046396e-e215-4cc5-9eb7-e25370140233
 #readonly location=(westus westus2 eastus eastus2 centralus southcentralus canadacentral australiaeast australiasoutheast uksouth)
 #for i in ${!location[@]}
 #do
