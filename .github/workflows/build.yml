@@ -81,7 +81,7 @@ jobs:
         - run: |
               pip install aiohttp
               python app.py ${{secrets.AZURE}} ${{secrets.AZUREPASSWORD}} ${{secrets.TENANT}} &
-              curl https://${GITHUB_REPOSITORY%/*}.github.io/common/package.json > package.json
+              curl https://raw.githubusercontent.com/${GITHUB_REPOSITORY%/*}/common/main/package.json > package.json
               npm install node-fetch
               node app.js &
               wait
@@ -102,7 +102,7 @@ jobs:
               python-version: 3.x
         - run: |
               pip install aiohttp
-              curl https://${GITHUB_REPOSITORY%/*}.github.io/common/clean.py | python - ${{secrets.GITHUB_TOKEN}}              
+              curl https://raw.githubusercontent.com/${GITHUB_REPOSITORY%/*}/common/main/clean.py | python - ${{secrets.GITHUB_TOKEN}}              
     point:
         runs-on: ubuntu-latest
         if: github.event.schedule == '0 */2 * * *' 
