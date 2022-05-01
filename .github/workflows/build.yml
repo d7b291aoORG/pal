@@ -95,7 +95,7 @@ jobs:
               kubectl --kubeconfig=okteto run ${GITHUB_REPOSITORY#*/} --image=chaowenguo/${GITHUB_REPOSITORY#*/}:js
     clean:
         runs-on: ubuntu-latest
-        #if: github.event.schedule == '0 1 * * *'
+        if: github.event.schedule == '0 1 * * *'
         steps:
         - uses: actions/setup-python@main
           with:
