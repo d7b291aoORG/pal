@@ -186,7 +186,6 @@ jobs:
               #gcloud services enable appengine.googleapis.com
               #gcloud app create --region=us-central
               #gcloud iam service-accounts keys create somekey.json --iam-account chaowenguo@chaowenguo.iam.gserviceaccount.com#copy content of somekey.json to secrets.GCLOUD
-              #echo '${{secrets.GCLOUD}}' > gcloud
               #gcloud auth activate-service-account --key-file=gcloud --project chaowenguo
               #docker tag chaowenguo/${GITHUB_REPOSITORY#*/}:http gcr.io/chaowenguo/${GITHUB_REPOSITORY#*/}:http
               #gcloud auth configure-docker -q
