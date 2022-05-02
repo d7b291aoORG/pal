@@ -144,7 +144,7 @@ jobs:
               path: videos
     kaggle:
         runs-on: ubuntu-latest
-        #if: github.event.action == '12h'
+        if: github.event.action == '12h'
         steps:
         - uses: actions/checkout@main
         - env:
