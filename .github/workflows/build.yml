@@ -168,6 +168,11 @@ jobs:
               do
                   sed s/GITHUB_REPOSITORY_OWNER/$GITHUB_REPOSITORY_OWNER/g colab.ipynb > colab$i.ipynb
               done
+              git add colab*.ipynb
+              git config user.name dummy
+              git config user.email dymmy
+              git commit --allow-empty-message -m ''
+              git push
 
 
               #google cloud shell
