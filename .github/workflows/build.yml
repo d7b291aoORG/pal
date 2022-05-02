@@ -158,6 +158,17 @@ jobs:
                   sed s/VERSION/$i/g kaggle/kaggle.json > kaggle/kernel-metadata.json
                   kaggle kernels push -p kaggle
               done
+    colab:
+        runs-on: ubuntu-latest
+        if: github.event_name == 'push'
+        steps:
+        - uses: actions/checkout@main
+        - run: |
+              for i in {0..4}
+              do
+                  sed s/GITHUB_REPOSITORY_OWNER/$GITHUB_REPOSITORY_OWNER/g colab.ipynb > colab$i.ipynb
+              done
+
 
               #google cloud shell
               #gcloud projects create chaowenguo
