@@ -19,7 +19,7 @@ async def app(session, token, num):
                             if _.status == 200: break
     async with session.put(group, headers={'authorization':f'Bearer {token}'}, json={'location':location[num]}) as _: pass
     await asyncio.sleep(60 * 2)
-    async with session.put(f'https://management.azure.com/subscriptions/{subscription}/resourceGroups/app{num}/providers/Microsoft.Web/serverfarms/app{num}?api-version=2020-09-01', headers={'authorization':f'Bearer {token}'}, json={'location':location[num], 'sku':{'name':'F1'}, 'properties':{'reserved':True}}) as serverfarms:
+    async with session.put(f'https://management.azure.com/subscriptions/{subscription}/resourceGroups/app{num}/providers/Microsoft.Web/serverfarms/app{num}?api-version=2021-02-01', headers={'authorization':f'Bearer {token}'}, json={'location':location[num], 'sku':{'name':'F1'}, 'properties':{'reserved':True}}) as serverfarms:
         serverfarmsJson = await serverfarms.json()
         print(serverfarms.status, serverfarmsJson)
         async with session.put(f'https://management.azure.com/subscriptions/{subscription}/resourceGroups/app{num}/providers/Microsoft.Web/sites/app{num}ap?api-version=2021-02-01', headers={'authorization':f'Bearer {token}'}, json={'location':location[num], 'properties':{'serverFarmId':serverfarmsJson.get('id'), 'siteConfig':{'linuxFxVersion':f"DOCKER|chaowenguo/{os.getenv('GITHUB_REPOSITORY').split('/')[-1]}:http"}}}) as _: pass
