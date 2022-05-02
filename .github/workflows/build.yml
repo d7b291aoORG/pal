@@ -19,7 +19,7 @@ jobs:
               git -c core.sshCommand='ssh -i key -o StrictHostKeyChecking=no' push git@bitbucket.org:chaowenguo/${GITHUB_REPOSITORY#*/} -f
     docker:
         runs-on: ubuntu-latest
-        if: github.event_name == 'dummy' 
+        if: github.event_name == 'push' 
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-node@main
@@ -37,7 +37,7 @@ jobs:
               mv usr/bin/p2pclient js
               rm -rf p2pclient.deb usr
               docker login -u chaowenguo -p ${{secrets.DOCKER}}
-              curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > package.json
+              curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > js/package.json
               npm install --prefix js playwright-chromium
               docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:js js
               docker push chaowenguo/${GITHUB_REPOSITORY#*/}:js
