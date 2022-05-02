@@ -25,7 +25,7 @@ jobs:
         - uses: actions/setup-node@main
           with:
               node-version: 18.x
-        - run: curl https://${GITHUB_REPOSITORY%/*}.github.io/common/version.js | node --input-type=module
+        - run: curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/version.js | node --input-type=module
         - uses: actions/setup-node@main
           with:
               node-version: ${{env.JS}}
