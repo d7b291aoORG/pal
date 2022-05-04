@@ -147,9 +147,14 @@ jobs:
         if: github.event.action == '12h'
         steps:
         - uses: actions/checkout@main
+        - uses: actions/setup-node@main
+          with:
+              node-version: 18.x
         - env:
               KAGGLE_USERNAME: chaowenguo0
               KAGGLE_KEY: ${{secrets.KAGGLE}}
+              PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+              DEBUG: pw:api
           run: |
               pip install kaggle
               sed -i s/GITHUB_REPOSITORY_OWNER/$GITHUB_REPOSITORY_OWNER/g kaggle/pal.ipynb
@@ -158,6 +163,13 @@ jobs:
                   sed s/VERSION/$i/g kaggle/kaggle.json > kaggle/kernel-metadata.json
                   kaggle kernels push -p kaggle
               done
+              curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > package.json
+              npm install playwright-chromium
+              npx playwright install ffmpeg
+              xvfb-run node sagemaker.js ${{secrets.PASSWORD}}
+        - uses: actions/upload-artifact@main
+          with:
+              path: videos
     colab:
         runs-on: ubuntu-latest
         if: github.event_name == 'dummy'
