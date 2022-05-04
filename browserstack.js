@@ -18,4 +18,4 @@ const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'),
 await popup.bringToFront()
 const blank = await browser.newPage()
 context.on('page', async _ => await _.close())
-globalThis.setInterval(async _ => await blank.reload(), 1000 * 60 * 2)
+globalThis.setInterval(async _ => await blank.reload(), 1000 * 60)
