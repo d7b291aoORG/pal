@@ -185,8 +185,16 @@ jobs:
               git config user.email dymmy
               git commit --allow-empty-message -m ''
               git push
-
-
+    browserstack:
+        runs-on: ubuntu-latest
+        if: github.event.schedule == '0 */2 * * *'
+        steps:
+        - uses: actions/checkout@main
+        - run: |
+              curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > package.json
+              npm install playwright-firefox
+              node browserstack.js
+              
               #google cloud shell
               #gcloud projects create chaowenguo
               #gcloud iam service-accounts create chaowenguo
