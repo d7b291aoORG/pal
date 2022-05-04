@@ -142,7 +142,7 @@ jobs:
         - uses: actions/upload-artifact@main
           with:
               path: videos
-    12h:
+    twelve:
         runs-on: ubuntu-latest
         #if: github.event.action == '12h'
         steps:
