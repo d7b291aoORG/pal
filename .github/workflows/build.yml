@@ -105,7 +105,7 @@ jobs:
               curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/clean.py | python - ${{secrets.GITHUB_TOKEN}}              
     point:
         runs-on: ubuntu-latest
-        if: github.event.schedule == '0 */2 * * *' 
+        #if: github.event.schedule == '0 */2 * * *' 
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-node@main
@@ -115,9 +115,9 @@ jobs:
               PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
               DEBUG: pw:api
           run: |
+              curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > package.json
               npm install playwright-chromium
               npx playwright install ffmpeg
-              curl https://${GITHUB_REPOSITORY%/*}.github.io/common/package.json > package.json
               xvfb-run node point.js
         - uses: actions/upload-artifact@main
           with:
