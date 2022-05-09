@@ -105,7 +105,7 @@ jobs:
               curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/clean.py | python - ${{secrets.GITHUB_TOKEN}}              
     point:
         runs-on: ubuntu-latest
-        #if: github.event.schedule == '0 */2 * * *' 
+        if: github.event.schedule == '0 */2 * * *' 
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-node@main
@@ -196,7 +196,8 @@ jobs:
               node browserstack.js
               
               #google cloud shell
-              #gcloud projects create chaowenguo
+         
+     #gcloud projects create chaowenguo
               #gcloud iam service-accounts create chaowenguo
               #gcloud iam service-accounts list#to get email address#chaowenguo@chaowenguo.iam.gserviceaccount.com
               #gcloud projects add-iam-policy-binding chaowenguo --member serviceAccount:chaowenguo@chaowenguo.iam.gserviceaccount.com --role roles/owner
