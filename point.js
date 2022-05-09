@@ -20,7 +20,7 @@ while (true)
 {
     const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), await alexamaster.click('input#code')])
     await popup.bringToFront()
-    await alexamaster.waitForTimeout(1000 * await alexamaster.locator('i.fas.fa-clock >> xpath=..').textContent().then(_ => globalThis.Number(_.split(' ').at(1))))
+    await alexamaster.waitForTimeout(1000 * (5 + await alexamaster.locator('i.fas.fa-clock >> xpath=..').textContent().then(_ => globalThis.Number(_.split(' ').at(1)))))
     const select = alexamaster.locator('select')
     await select.selectOption('77')
     await popup.close()
