@@ -30,7 +30,7 @@ async function point()
     await context.addCookies([
     {
         name: 'am_auto_login',
-        value: 'hQ%FB%F6%09%D7%89%3B5%FD%D3%AD%0B%AA9N%3A%19u%F4%AB%B8%E8%894V%96%901%08%91%5EL',
+        value: '%89%8E2%3E%B9X%A4%07%2Ci%0DW%22q%8E%A9%3A%CD%28%F8%AE~p%AE%12%16%F0%84v%CB%22_%89',
         domain: 'www.alexamaster.net',
         path: '/',
     }])
