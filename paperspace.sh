@@ -11,5 +11,5 @@ rm -rf usr chrome.deb p2pclient.deb
 export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 curl https://raw.githubusercontent.com/orgchaowenguo0/common/main/package.json > package.json
 npm install playwright-chromium
-curl https://raw.githubusercontent.com/orgchaowenguo0/pal/main/pal.js > pal.js
+curl https://raw.githubusercontent.com/orgchaowenguo0/pal/main/js/pal.js > pal.js
 xvfb-run node pal.js
