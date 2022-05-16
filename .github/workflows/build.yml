@@ -173,7 +173,9 @@ jobs:
               path: videos
     colab:
         runs-on: ubuntu-latest
-        if: github.event_name == 'dummy'
+        if: github.event_name == 'push'
+        permissions:
+            repository-projects: write
         steps:
         - uses: actions/checkout@main
         - run: |
