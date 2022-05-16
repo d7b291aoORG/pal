@@ -103,25 +103,25 @@ jobs:
         - run: |
               pip install aiohttp
               curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/clean.py | python - ${{secrets.GITHUB_TOKEN}}              
-    point:
-        runs-on: ubuntu-latest
-        if: github.event.schedule == '0 */2 * * *' 
-        steps:
-        - uses: actions/checkout@main
-        - uses: actions/setup-node@main
-          with:
-              node-version: 18.x
-        - env:
-              PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
-              DEBUG: pw:api
-          run: |
-              curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > package.json
-              npm install playwright-chromium
-              npx playwright install ffmpeg
-              xvfb-run node point.js
-        - uses: actions/upload-artifact@main
-          with:
-              path: videos             
+    #point:
+    #    runs-on: ubuntu-latest
+    #    if: github.event.schedule == '0 */2 * * *' 
+    #    steps:
+    #    - uses: actions/checkout@main
+    #    - uses: actions/setup-node@main
+    #      with:
+    #          node-version: 18.x
+    #    - env:
+    #          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+    #          DEBUG: pw:api
+    #      run: |
+    #          curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > package.json
+    #          npm install playwright-chromium
+    #          npx playwright install ffmpeg
+    #          xvfb-run node point.js
+    #    - uses: actions/upload-artifact@main
+    #      with:
+    #          path: videos             
     paperspace:
         runs-on: ubuntu-latest
         #if: github.event.schedule == '0 */6 * * *'
