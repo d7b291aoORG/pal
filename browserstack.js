@@ -24,11 +24,9 @@ async function session()
     globalThis.setInterval(async _ => await blank.reload(), 1000 * 60)
 }
 
-import {chromium} from 'playwright-chromium'
-
 async function point()
 {
-    const browser = await chromium.connect({wsEndpoint:`wss://cdp.browserstack.com/playwright?caps=${globalThis.encodeURIComponent(globalThis.JSON.stringify(caps))}`})
+    const browser = await firefox.connect({wsEndpoint:`wss://cdp.browserstack.com/playwright?caps=${globalThis.encodeURIComponent(globalThis.JSON.stringify(caps))}`})
     const context = await browser.newContext()
     await context.addCookies([
     {
