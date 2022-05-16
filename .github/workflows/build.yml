@@ -227,7 +227,7 @@ jobs:
               #fi
               #az group create -n azurefun -l westusimwrite
               #az storage account create -n azurefun -g azurefun -l westus
-            popup  #az functionapp plan create -n azurefun -g azurefun --number-of-workers 1 --sku B1 --is-linux
+              #az functionapp plan create -n azurefun -g azurefun --number-of-workers 1 --sku B1 --is-linux
               #az functionapp create -n azurefunazurefun -s azurefun -g azurefun -p azurefun -i chaowenguo/azurefun --functions-version 3
               #heroku apps:destroy -a palpal0 -c palpal0
               #heroku create pimwritealpal0
