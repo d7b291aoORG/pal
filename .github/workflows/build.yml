@@ -43,30 +43,30 @@ jobs:
               docker push chaowenguo/${GITHUB_REPOSITORY#*/}:js
               docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:http --build-arg JS=${GITHUB_REPOSITORY#*/} http
               docker push chaowenguo/${GITHUB_REPOSITORY#*/}:http
-    divio:
-        runs-on: ubuntu-latest
-        if: github.event_name == 'push'
-        steps:
-        - uses: actions/checkout@main
-        - uses: actions/setup-python@main
-          with:
-              python-version: 3.x
-        - run: curl https://${GITHUB_REPOSITORY%/*}.github.io/common/version.py | python -
-        - uses: actions/setup-python@main
-          with:
-              python-version: ${{env.PY}}
-        - run: |
-              python -m compileall -b .
-              curl https://${{secrets.GITHUB}}@raw.githubusercontent.com/chaowenGUO/server/main/key > key
-              chmod 400 key
-              git -c core.sshCommand='ssh -i key -o StrictHostKeyChecking=no' clone git@git.divio.com:py
-              mv divio/Dockerfile divio/server.pyc py
-              cd py
-              git add -A
-              git config user.email dummy
-              git config user.name dummy
-              git commit --allow-empty-message -m ''
-              git -c core.sshCommand='ssh -i ../key' push
+    #divio:
+    #    runs-on: ubuntu-latest
+    #    if: github.event_name == 'push'
+    #    steps:
+    #    - uses: actions/checkout@main
+    #    - uses: actions/setup-python@main
+    #      with:
+    #          python-version: 3.x
+    #    - run: curl https://${GITHUB_REPOSITORY%/*}.github.io/common/version.py | python -
+    #    - uses: actions/setup-python@main
+    #      with:
+    #          python-version: ${{env.PY}}
+    #    - run: |
+    #          python -m compileall -b .
+    #          curl https://${{secrets.GITHUB}}@raw.githubusercontent.com/chaowenGUO/server/main/key > key
+    #          chmod 400 key
+    #          git -c core.sshCommand='ssh -i key -o StrictHostKeyChecking=no' clone git@git.divio.com:py
+    #          mv divio/Dockerfile divio/server.pyc py
+    #          cd py
+    #          git add -A
+    #          git config user.email dummy
+    #          git config user.name dummy
+    #          git commit --allow-empty-message -m ''
+    #          git -c core.sshCommand='ssh -i ../key' push
     azure:
         runs-on: ubuntu-latest
         if: github.event.schedule == '0 */2 * * *' 
