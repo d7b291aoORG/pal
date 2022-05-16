@@ -19,7 +19,7 @@ async function session()
     const alexamaster = await context.newPage()
     const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/157701')])
     await popup.bringToFront()
-    #context.on('page', async _ => await _.close())
+    //context.on('page', async _ => await _.close())
     globalThis.setInterval(async _ => await popup.url(), 1000 * 60)
 }
 
