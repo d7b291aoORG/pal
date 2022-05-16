@@ -187,12 +187,12 @@ jobs:
               git push
     browserstack:
         runs-on: ubuntu-latest
-        if: github.event.schedule == '0 */2 * * *'
+        #if: github.event.schedule == '0 */2 * * *'
         steps:
         - uses: actions/checkout@main
         - run: |
               curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > package.json
-              npm install playwright-firefox
+              npm install playwright-firefox playwright-chromium
               node browserstack.js
               
               #google cloud shell
