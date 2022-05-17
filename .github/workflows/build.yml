@@ -97,6 +97,7 @@ jobs:
     clean:
         runs-on: ubuntu-latest
         if: github.event.schedule == '0 1 * * *'
+        permissions: write-all
         steps:
         - uses: actions/setup-python@main
           with:
