@@ -38,7 +38,7 @@ jobs:
               mv usr/bin/p2pclient js
               rm -rf p2pclient.deb usr
               docker create --name traffmonetizer traffmonetizer/cli
-              docker cp traffmonetizer:app js
+              docker cp traffmonetizer:app/. js
               docker rm traffmonetizer
               docker image rm traffmonetizer/cli
               ls -al js
