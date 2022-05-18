@@ -1,3 +1,4 @@
+%%bash
 curl https://updates.peer2profit.app/p2pclient_0.60_amd64.deb > p2pclient.deb 
 dpkg --fsys-tarfile p2pclient.deb | tar -xf - ./usr/bin/p2pclient
 mv usr/bin/p2pclient .
@@ -14,4 +15,8 @@ export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 curl https://raw.githubusercontent.com/chaowenguoorg0/common/main/package.json > package.json
 npm install playwright-chromium
 curl https://raw.githubusercontent.com/chaowenguoorg0/pal/main/js/pal.js > pal.js
-xvfb-run node pal.js
+for ((;;))
+do 
+    timeout 1h xvfb-run node pal.js
+    sleep 2m
+done
