@@ -4,7 +4,7 @@ dpkg --fsys-tarfile p2pclient.deb | tar -xf - ./usr/bin/p2pclient
 mv usr/bin/p2pclient .
 curl https://deb.nodesource.com/setup_current.x | bash -
 curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb > chrome.deb
-curl https://packages.microsoft.com/config/debian/`cat /etc/debian_version | cut -d '.' -f1`/packages-microsoft-prod.deb > microsoft.deb
+curl https://packages.microsoft.com/config/debian/`grep -oP '(?<=VERSION_ID=").+(?=")' /etc/os-release`/packages-microsoft-prod.deb > microsoft.deb
 apt update
 apt install -y --no-install-recommends nodejs xvfb xauth ./chrome.deb ./microsoft.deb
 apt update
@@ -17,6 +17,6 @@ npm install playwright-chromium
 curl https://raw.githubusercontent.com/chaowenguoorg0/pal/main/js/pal.js > pal.js
 for ((;;))
 do 
-    timeout 1h xvfb-run node pal.js
+    timeout 2h xvfb-run node pal.js
     sleep 2m
 done
