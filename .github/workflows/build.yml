@@ -183,7 +183,7 @@ jobs:
         runs-on: ubuntu-latest
         #if: github.event_name == 'dummy'
         permissions:
-            repository-projects: write
+            contents: write
         steps:
         - uses: actions/checkout@main
         - run: |
