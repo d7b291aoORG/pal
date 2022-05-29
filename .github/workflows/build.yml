@@ -14,9 +14,9 @@ jobs:
         - uses: actions/checkout@main
         - run: |
               git fetch --unshallow
-              curl -H authorization:token\ ${{secrets.GITHUB}} https://raw.githubusercontent.com/$GITHUB_ACTOR/key/main/key > key
+              echo '${{secrets.KEY}}' > key
               chmod 400 key
-              git -c core.sshCommand='ssh -i key -o StrictHostKeyChecking=no' push git@bitbucket.org:chaowenguo/${GITHUB_REPOSITORY#*/} -f
+              git -c core.sshCommand='ssh -i key -o StrictHostKeyChecking=no' push -f git@bitbucket.org:chaowenguo/${GITHUB_REPOSITORY#*/}
     docker:
         runs-on: ubuntu-latest
         if: github.event_name == 'dummy' 
