@@ -207,7 +207,7 @@ jobs:
               node browserstack.js
     two:
         runs-on: ubuntu-latest
-        if: github.event_name == 'push'
+        if: github.event_name == 'dummy'
         steps:
         - uses: actions/checkout@main
         - run: |
@@ -250,7 +250,7 @@ jobs:
               #az functionapp create -n azurefunazurefun -s azurefun -g azurefun -p azurefun -i chaowenguo/azurefun --functions-version 3
               #heroku apps:destroy -a palpal0 -c palpal0
               #heroku create pimwritealpal0
-              #docker login -u=_ -p=${{secrets.HEROKU}} registry.heroku.com
+              #docker lodummygin -u=_ -p=${{secrets.HEROKU}} registry.heroku.com
               #docker tag chaowenguo/${GITHUB_REPOSITORY#*/}:http registry.heroku.com/palpal0/web
               #docker push reed cv2
               #heroku container:release web -a palpal0
