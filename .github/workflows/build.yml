@@ -3,7 +3,6 @@ on:
     schedule:
     - cron: '0 6,18 * * *'
     - cron: '0 1 * * *'
-    - cron: '0 */2 * * *'
     repository_dispatch:
     
 jobs:
@@ -76,7 +75,7 @@ jobs:
     #          git -c core.sshCommand='ssh -i ../key' push
     azure:
         runs-on: ubuntu-latest
-        if: github.event.schedule == '0 */2 * * *' 
+        if: github.event.action == '2h'
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-python@main
@@ -198,7 +197,7 @@ jobs:
               git push
     browserstack:
         runs-on: ubuntu-latest
-        if: github.event.schedule == '0 */2 * * *'
+        if: github.event.action == '2h'
         steps:
         - uses: actions/checkout@main
         - run: |
