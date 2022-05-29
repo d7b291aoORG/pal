@@ -206,7 +206,7 @@ jobs:
               node browserstack.js
     two:
         runs-on: ubuntu-latest
-        if: github.event_name == 'push'
+        if: github.event_name == 'dummy'
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-node@main
