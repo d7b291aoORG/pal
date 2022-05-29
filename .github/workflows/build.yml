@@ -181,7 +181,7 @@ jobs:
               path: videos
     colab:
         runs-on: ubuntu-latest
-        if: github.event_name == 'dummy'
+        #if: github.event_name == 'dummy'
         permissions:
             contents: write
         steps:
