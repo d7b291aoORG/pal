@@ -205,6 +205,15 @@ jobs:
               curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > package.json
               npm install playwright-firefox
               node browserstack.js
+    two:
+        runs-on: ubuntu-latest
+        if: github.event_name == 'push'
+        steps:
+        - uses: actions/checkout@main
+        - run: |
+              curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > package.json
+              npm install google-auth-library
+              node 2h.js ${{secrets.GITHUB}}
               
               #google cloud shell
          
