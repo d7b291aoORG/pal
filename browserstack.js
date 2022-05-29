@@ -21,6 +21,7 @@ async function session()
     await popup.bringToFront()
     //context.on('page', async _ => await _.close())
     globalThis.setInterval(async _ => await alexamaster.content(), 1000 * 30)
+    globalThis.setTimeout(async _ => await browser.close(), 1000 * 60 * 110)
 }
 
 async function point()
