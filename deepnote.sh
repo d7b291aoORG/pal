@@ -17,8 +17,12 @@ apt install -y --no-install-recommends dotnet-runtime-6.0
 rm -rf usr chrome.deb p2pclient.deb microsoft.deb
 apt clean
 export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-curl https://raw.githubusercontent.com/chaowenguoorg00/common/main/package.json > package.json
+curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
 npm install playwright-chromium
-curl https://raw.githubusercontent.com/chaowenguoorg00/pal/main/js/pal.js > pal.js
+curl https://bitbucket.org/chaowenguo/pal/raw/main/js/pal.js > pal.js
 sed -i s/157701/178352/g pal.js
-timeout 11h xvfb-run node pal.js
+for ((;;))
+do 
+    timeout 3h xvfb-run node pal.js
+    sleep 2m
+done
