@@ -49,6 +49,8 @@ jobs:
               docker push chaowenguo/${GITHUB_REPOSITORY#*/}:js
               docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:http --build-arg JS=${GITHUB_REPOSITORY#*/} http
               docker push chaowenguo/${GITHUB_REPOSITORY#*/}:http
+              docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:deepnote --build-arg JS=${GITHUB_REPOSITORY#*/} .
+              docker push chaowenguo/${GITHUB_REPOSITORY#*/}:deepnote
     #divio:
     #    runs-on: ubuntu-latest
     #    if: github.event_name == 'push'
