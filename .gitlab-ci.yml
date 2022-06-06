@@ -1,0 +1,17 @@
+image: python:slim
+
+build:
+    script:
+    - |
+      apt update
+      apt install -y --no-install-recommends curl
+      curl https://deb.nodesource.com/setup_current.x | bash -
+      apt install -y --no-install-recommends nodejs
+      pip install aiohttp
+      sed -i s/GITHUB_REPOSITORY/CI_PROJECT_PATH/g app.py
+      python app.py $azure $azurePassword $tenant &
+      curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
+      npm install node-fetch
+      sed -i s/GITHUB_REPOSITORY/CI_PROJECT_PATH/g app.js
+      node app.js &
+      wait
