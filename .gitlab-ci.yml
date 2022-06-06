@@ -25,6 +25,6 @@ okteto:
     - pushes
     script:
     - |
-      echo $okteto > okteto
+      echo '$okteto' > okteto
       kubectl --kubeconfig=okteto delete pod $CI_PROJECT_NAME --ignore-not-found -v=8
       kubectl --kubeconfig=okteto run $CI_PROJECT_NAME --image=chaowenguo/$CI_PROJECT_NAME:js -v=8
