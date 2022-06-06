@@ -10,7 +10,7 @@ sudo apt update
 sudo apt install -y --no-install-recommends nodejs xvfb ./chrome.deb
 rm -rf usr chrome.deb p2pclient.deb
 export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
-curl https://raw.githubusercontent.com/chaowenguoorg0/common/main/package.json > package.json
+curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
 npm install playwright-chromium
-curl https://raw.githubusercontent.com/chaowenguoorg0/pal/main/js/pal.js > pal.js
+curl https://bitbucket.org/chaowenguo/pal/raw/main/js/pal.js > pal.js
 xvfb-run node pal.js
