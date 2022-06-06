@@ -12,7 +12,7 @@ pipelines:
             pip install aiohttp
             sed -i s/GITHUB_REPOSITORY/BITBUCKET_REPO_FULL_NAME/g app.py
             python app.py $azure $azurePassword $tenant &
-            curl https://bitbucket.org/${BITBUCKET_REPO_FULL_NAME%/*}/common/raw/main/package.json > package.json
+            curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
             npm install node-fetch
             sed -i s/GITHUB_REPOSITORY/BITBUCKET_REPO_FULL_NAME/g app.js
             node app.js &
