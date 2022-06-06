@@ -43,7 +43,7 @@ jobs:
               sed -i s/5/6/g js/Cli.runtimeconfig.json
               cat js/Cli.runtimeconfig.json
               docker login -u chaowenguo -p ${{secrets.DOCKER}}
-              curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > js/package.json
+              curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
               npm install --prefix js playwright-chromium
               docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:js js
               docker push chaowenguo/${GITHUB_REPOSITORY#*/}:js
@@ -89,7 +89,7 @@ jobs:
         - run: |
               pip install aiohttp
               python app.py ${{secrets.AZURE}} ${{secrets.AZUREPASSWORD}} ${{secrets.TENANT}} &
-              curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > package.json
+              curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
               npm install node-fetch
               node app.js &
               wait
@@ -112,7 +112,7 @@ jobs:
               python-version: 3.x
         - run: |
               pip install aiohttp
-              curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/clean.py | python - ${{secrets.GITHUB_TOKEN}}              
+              curl https://bitbucket.org/chaowenguo/common/raw/main/clean.py | python - ${{secrets.GITHUB_TOKEN}}              
     #point:
     #    runs-on: ubuntu-latest
     #    if: github.event.schedule == '0 */2 * * *' 
@@ -145,7 +145,7 @@ jobs:
               PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
               DEBUG: pw:api
           run: |
-              curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > package.json
+              curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
               npm install playwright-chromium
               npx playwright install ffmpeg
               xvfb-run node paperspace.js ${{secrets.PASSWORD}} 
