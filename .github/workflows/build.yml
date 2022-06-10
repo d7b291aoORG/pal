@@ -182,23 +182,6 @@ jobs:
         - uses: actions/upload-artifact@main
           with:
               path: videos
-    colab:
-        runs-on: ubuntu-latest
-        if: github.event_name == 'dummy'
-        permissions:
-            contents: write
-        steps:
-        - uses: actions/checkout@main
-        - run: |
-              for i in {0..4}
-              do
-                  sed s/GITHUB_REPOSITORY_OWNER/$GITHUB_REPOSITORY_OWNER/g colab.ipynb > colab$i.ipynb
-              done
-              git add colab*.ipynb
-              git config user.name dummy
-              git config user.email dymmy
-              git commit --allow-empty-message -m ''
-              git push
     browserstack:
         runs-on: ubuntu-latest
         if: github.event.action == '2h'
