@@ -182,15 +182,6 @@ jobs:
         - uses: actions/upload-artifact@main
           with:
               path: videos
-    browserstack:
-        runs-on: ubuntu-latest
-        if: github.event.action == '2h'
-        steps:
-        - uses: actions/checkout@main
-        - run: |
-              curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > package.json
-              npm install playwright-firefox
-              node browserstack.js
     two:
         runs-on: ubuntu-latest
         if: github.event_name == 'dummy'
