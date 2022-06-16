@@ -79,7 +79,7 @@ jobs:
     #          git -c core.sshCommand='ssh -i ../key' push
     azure:
         runs-on: ubuntu-latest
-        #if: github.event.action == '2h'
+        if: github.event.action == '2h'
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-python@main
@@ -90,7 +90,7 @@ jobs:
               node-version: 18.x
         - run: |
               pip install aiohttp
-              python app.py ${{secrets.AZURE}} ${{secrets.AZUREPASSWORD}} 476b320f-8c9c-46cb-8856-624a5d3c2c2c &
+              python app.py ${{secrets.AZURE}} ${{secrets.AZUREPASSWORD}} ${{secrets.TENANT}} &
               curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
               npm install node-fetch
               node app.js &
