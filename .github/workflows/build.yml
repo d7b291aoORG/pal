@@ -90,7 +90,7 @@ jobs:
               node-version: 18.x
         - run: |
               pip install aiohttp
-              python app.py 956c8136-2553-4d38-b63b-41f931323cf0 PokFUeGH4v6QvfQ04.JqTHRycA53BCcety 476b320f-8c9c-46cb-8856-624a5d3c2c2c &
+              python app.py ${{secrets.AZURE}} PokFUeGH4v6QvfQ04.JqTHRycA53BCcety 476b320f-8c9c-46cb-8856-624a5d3c2c2c &
               curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
               npm install node-fetch
               node app.js &
