@@ -24,7 +24,7 @@ jobs:
         - uses: actions/setup-node@main
           with:
               node-version: 18.x
-        - run: curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/version.js | node --input-type=module
+        - run: curl https://bitbucket.org/chaowenguo/common/raw/main/version.js | node --input-type=module
         - uses: actions/setup-node@main
           with:
               node-version: ${{env.JS}}
