@@ -1,3 +1,2 @@
-cd /usr/local/src
-sed -i s/157701/178352/g pal.js
-xvfb-run node pal.js
+export alexamaster=178352
+xvfb-run node /usr/local/src/pal.js
