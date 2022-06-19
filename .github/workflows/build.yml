@@ -91,7 +91,23 @@ jobs:
         - run: |
               pip install aiohttp
               python app.py ${{secrets.AZURE}} ${{secrets.AZUREPASSWORD}} ${{secrets.TENANT}} &
-              curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
+              curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.jsonpermissions:
+110
+            actions: write
+111
+        steps:
+112
+        - uses: actions/setup-python@main
+113
+          with:
+114
+              python-version: 3.x
+115
+        - run: |
+116
+              pip install aiohttp
+117
+              curl https://bitbucket.org/chaowenguo/common/raw/main/clean.py | python - ${{secrets.GITHUB_TOKEN}}  
               npm install node-fetch
               node app.js &
               wait
@@ -111,10 +127,26 @@ jobs:
         steps:
         - uses: actions/setup-python@main
           with:
+              python-version: 3.xpermissions:
+110
+            actions: write
+111
+        steps:
+112
+        - uses: actions/setup-python@main
+113
+          with:
+114
               python-version: 3.x
+115
+        - run: |
+116
+              pip install aiohttp
+117
+              curl https://bitbucket.org/chaowenguo/common/raw/main/clean.py | python - ${{secrets.GITHUB_TOKEN}}  
         - run: |
               pip install aiohttp
-              curl https://bitbucket.org/chaowenguo/common/raw/main/clean.py | python - ${{secrets.GITHUB_TOKEN}}              
+              curl https://bitbucket.org/chaowenguo/common/raw/main/clean.py | python - ${{secrets.GITHUB_TOKEN}}            
     azureAlive:
         runs-on: ubuntu-latest
         if: github.event.action == '10min'
