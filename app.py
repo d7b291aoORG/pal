@@ -22,8 +22,7 @@ async def app(session, token, num):
     async with session.put(f'https://management.azure.com/subscriptions/{subscription}/resourceGroups/app{num}/providers/Microsoft.Web/serverfarms/app{num}?api-version=2021-02-01', headers={'authorization':f'Bearer {token}'}, json={'location':location[num], 'sku':{'name':'F1'}, 'properties':{'reserved':True}}) as serverfarms:
         serverfarmsJson = await serverfarms.json()
         print(serverfarms.status, serverfarmsJson)
-        async with session.put(f'https://management.azure.com/subscriptions/{subscription}/resourceGroups/app{num}/providers/Microsoft.Web/sites/app{num}ap?api-version=2021-02-01', headers={'authorization':f'Bearer {token}'}, json={'location':location[num], 'properties':{'serverFarmId':serverfarmsJson.get('id'), 'siteConfig':{'linuxFxVersion':f"DOCKER|chaowenguo/{os.getenv('GITHUB_REPOSITORY').split('/')[-1]}:http"}}}) as _: pass
-        #async with session.put(f'https://management.azure.com/subscriptions/{subscription}/resourceGroups/app{num}/providers/Microsoft.Web/sites/app{num}ap?api-version=2021-02-01', headers={'authorization':f'Bearer {token}'}, json={'location':location[num], 'properties':{'serverFarmId':serverfarmsJson.get('id'), 'siteConfig':{'linuxFxVersion':f"DOCKER|chaowenguo/{os.getenv('GITHUB_REPOSITORY').split('/')[-1]}:http", 'appSettings':[{'name':'PORT', 'value':'80'}]}}}) as _: pass
+        async with session.put(f'https://management.azure.com/subscriptions/{subscription}/resourceGroups/app{num}/providers/Microsoft.Web/sites/app{num}ap?api-version=2021-02-01', headers={'authorization':f'Bearer {token}'}, json={'location':location[num], 'properties':{'serverFarmId':serverfarmsJson.get('id'), 'siteConfig':{'linuxFxVersion':f"DOCKER|chaowenguo/{os.getenv('GITHUB_REPOSITORY').split('/')[-1]}:http", 'appSettings':[{'name':'alexamaster', 'value':'157701'}]}}}) as _: pass
         #async with session.put(f'https://management.azure.com/subscriptions/{subscription}/resourceGroups/app{num}/providers/Microsoft.Web/sites/app{num}ap?api-version=2021-02-01', headers={'authorization':f'Bearer {token}'}, json={'location':location[num], 'properties':{'serverFarmId':serverfarmsJson.get('id'), 'siteConfig':{'linuxFxVersion':f"COMPOSE|{base64.b64encode(pathlib.Path(__file__).resolve().parent.joinpath('app.yml').read_bytes()).decode()}"}}}) as _: pass
     
 async def main():
@@ -54,6 +53,6 @@ asyncio.run(main())
 #    az appservice plan create -n app$i -g app$i --sku F1 --is-linux
 #    az webapp create -n app${i}ap -p app$i -g app$i -i chaowenguo/${GITHUB_REPOSITORY#*/}:http
 #    az webapp create -g app$i -p app$i -n app${i}ap --multicontainer-config-type compose --multicontainer-config-file app.yml
-#    az webapp config appsettings set -n app${i}ap -g app$i --settings PORT=80
-# done
+#    az webapp config appsettings set -n app${i}ap -g app$i --settings alexamaster=157701
+#done
 #az group exists -n app0 --debug# to the rest api
