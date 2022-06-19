@@ -79,7 +79,7 @@ jobs:
     #          git -c core.sshCommand='ssh -i ../key' push
     azure:
         runs-on: ubuntu-latest
-        #if: github.event.action == '2h'
+        if: github.event.action == '2h'
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-python@main
