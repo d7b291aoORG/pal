@@ -1,5 +1,5 @@
-import child_process from 'child_process'
-import path from 'path'
-
-child_process.spawn(path.join(path.dirname(new globalThis.URL(import.meta.url).pathname), 'p2pclient'), ['-l', 'chaowen.guo1@gmail.com', '-n', ';8.8.8.8,4.4.4.4'])
-child_process.spawn(path.join(path.dirname(new globalThis.URL(import.meta.url).pathname), 'Cli'), ['start', 'accept', '--token', 'ELGPy/DEQYDtARslA6HnkrbPIF6JQi+qYLCre5LBe58='])
+FROM node:slim
+RUN ["bash", "-c", "apt update && apt install -y --no-install-recommends curl ca-certificates && curl https://packages.microsoft.com/config/debian/`grep -oP '(?<=VERSION_ID=\").+(?=\")' /etc/os-release`/packages-microsoft-prod.deb > microsoft.deb && apt install -y --no-install-recommends ./microsoft.deb && apt update && apt install -y --no-install-recommends dotnet-runtime-6.0 && rm -rf microsoft.deb && apt clean"]
+COPY small.js package.json p2pclient Cli Cli.dll Base.dll Cli.runtimeconfig.json /usr/local/src/
+WORKDIR /usr/local/src
+ENTRYPOINT ["node", "small.js"]
