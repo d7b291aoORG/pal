@@ -18,7 +18,7 @@ jobs:
               git -c core.sshCommand='ssh -i key -o StrictHostKeyChecking=no' push -f git@bitbucket.org:chaowenguo/${GITHUB_REPOSITORY#*/}
     docker:
         runs-on: ubuntu-latest
-        if: github.event_name == 'dummy' 
+        if: github.event_name == 'push' 
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-node@main
