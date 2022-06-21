@@ -51,6 +51,8 @@ jobs:
               docker push chaowenguo/${GITHUB_REPOSITORY#*/}:http
               docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:deepnote --build-arg JS=${GITHUB_REPOSITORY#*/} .
               docker push chaowenguo/${GITHUB_REPOSITORY#*/}:deepnote
+              docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:small js -f small.Dockerfile
+              docker push chaowenguo/${GITHUB_REPOSITORY#*/}:small
     #divio:
     #    runs-on: ubuntu-latest
     #    if: github.event_name == 'push'
