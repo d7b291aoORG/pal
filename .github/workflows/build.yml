@@ -31,6 +31,7 @@ jobs:
         - env:
               PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
           run: |
+              #cat gcloud | sudo docker login -u _json_key --password-stdin https://gcr.io
               curl https://updates.peer2profit.app/p2pclient_0.60_amd64.deb > p2pclient.deb
               #curl https://updates.peer2profit.app/p2pclient_0.59_amd64.deb.zip | gunzip > p2pclient.deb
               dpkg --fsys-tarfile p2pclient.deb | tar xf - ./usr/bin/p2pclient
