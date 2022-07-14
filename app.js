@@ -27,8 +27,12 @@ async function app(num)
     const serverfarms = await fetch(`https://management.azure.com/subscriptions/${subscription}/resourceGroups/app${num}/providers/Microsoft.Web/serverfarms/app${num}?api-version=2021-02-01`, {method:'put', headers:{authorization:`Bearer ${token}`, 'content-type':'application/json'}, body:globalThis.JSON.stringify({location:location.at(num), sku:{name:'F1'}, properties:{reserved:true}})})
     const json = await serverfarms.json()
     console.log(serverfarms.status, json)
-    await fetch(`https://management.azure.com/subscriptions/${subscription}/resourceGroups/app${num}/providers/Microsoft.Web/sites/app${num}bp?api-version=2021-02-01`, {method:'put', headers:{authorization:`Bearer ${token}`, 'content-type':'application/json'}, body:globalThis.JSON.stringify({location:location.at(num), properties:{serverFarmId:json.id, siteConfig:{linuxFxVersion:`DOCKER|chaowenguo/${process.env.GITHUB_REPOSITORY.split('/').at(-1)}:http`, appSettings:[{name:'alexamaster', value:'179063'}]}}})})
+    await fetch(`https://management.azure.com/subscriptions/${subscription}/resourceGroups/app${num}/providers/Microsoft.Web/sites/app${num}bp?api-version=2021-02-01`, {method:'put', headers:{authorization:`Bearer ${token}`, 'content-type':'application/json'}, body:globalThis.JSON.stringify({location:location.at(num), properties:{serverFarmId:json.id, siteConfig:{linuxFxVersion:'DOCKER|chaowenguo/pal:http', appSettings:[{name:'alexamaster', value:'157701'}]}}})})
     //await fetch(`https://management.azure.com/subscriptions/${subscription}/resourceGroups/app${num}/providers/Microsoft.Web/sites/app${num}bp?api-version=2021-02-01`, {method:'put', headers:{authorization:`Bearer ${token}`, 'content-type':'application/json'}, body:globalThis.JSON.stringify({location:location.at(num), properties:{serverFarmId:json.id, siteConfig:{linuxFxVersion:`COMPOSE|${globalThis.btoa(await fs.readFile(path.join(path.dirname(url.fileURLToPath(import.meta.url)), 'app.yml')))}`}}})})
 }
 
-await global.Promise.all(globalThis.Array.from({length:10}, (_, index) => app(index)))
+
+import http from 'http'
+http.createServer((req, res) => res.end('pal')).listen(80)
+
+await global.Promise.all(globalThis.Array.from({length:location.length}, (_, index) => app(index)))
