@@ -26,9 +26,9 @@ await fetch(`https://management.azure.com/subscriptions/${subscription}/resource
     properties:
     {
         definition:
-	{
-	    $schema:'https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#',
-	    triggers:{HTTP:{inputs:{method:'GET',uri:'https://' + fqdn}, recurrence:{frequency:'Hour',interval:2}, type:'Http'}}
-	}
+	    {
+	        $schema:'https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#',
+	        triggers:{HTTP:{inputs:{method:'GET',uri:'https://' + fqdn}, recurrence:{frequency:'Hour',interval:2}, type:'Http'}}
+	    }
     }
 })})
