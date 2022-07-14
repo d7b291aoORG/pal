@@ -79,7 +79,7 @@ jobs:
     #          git -c core.sshCommand='ssh -i ../key' push
     azure:
         runs-on: ubuntu-latest
-        if: github.event.action == '2h'
+        if: github.event_name == 'push' 
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-python@main
@@ -96,13 +96,11 @@ jobs:
               #pip install aiohttp
               #python app.py ${{secrets.AZURE}} ${{secrets.AZUREPASSWORD}} ${{secrets.TENANT}} &
               docker login -u chaowenguo -p ${{secrets.DOCKER}}
-              curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
-              npm install node-fetch
-              docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:js js
-              docker push chaowenguo/${GITHUB_REPOSITORY#*/}:js
-              npm install node-fetch
-              node app.js &
-              wait
+              curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > appJs/package.json
+              npm install --prefix appJs node-fetch
+              docker build -t chaowenguo/app:js appJs
+              docker push chaowenguo/app:js
+              node appJs/container.js
     okteto:
         runs-on: ubuntu-latest
         if: github.event.schedule == '0 6,18 * * *'
