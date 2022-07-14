@@ -88,10 +88,18 @@ jobs:
         - uses: actions/setup-node@main
           with:
               node-version: 18.x
+        - run: curl https://bitbucket.org/chaowenguo/common/raw/main/version.js | node --input-type=module
+        - uses: actions/setup-node@main
+          with:
+              node-version: ${{env.JS}}
         - run: |
-              pip install aiohttp
-              python app.py ${{secrets.AZURE}} ${{secrets.AZUREPASSWORD}} ${{secrets.TENANT}} &
+              #pip install aiohttp
+              #python app.py ${{secrets.AZURE}} ${{secrets.AZUREPASSWORD}} ${{secrets.TENANT}} &
+              docker login -u chaowenguo -p ${{secrets.DOCKER}}
               curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
+              npm install node-fetch
+              docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:js js
+              docker push chaowenguo/${GITHUB_REPOSITORY#*/}:js
               npm install node-fetch
               node app.js &
               wait
