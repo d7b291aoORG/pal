@@ -121,18 +121,7 @@ jobs:
               python-version: 3.x
         - run: |
               pip install aiohttp
-              curl https://bitbucket.org/chaowenguo/common/raw/main/clean.py | python - ${{secrets.GITHUB_TOKEN}}              
-    azureAlive:
-        runs-on: ubuntu-latest
-        if: github.event.action == '10min'
-        steps:
-        - uses: actions/checkout@main
-        - uses: actions/setup-python@main
-          with:
-              python-version: 3.x
-        - run: |
-              pip install aiohttp
-              python azure.py
+              curl https://bitbucket.org/chaowenguo/common/raw/main/clean.py | python - ${{secrets.GITHUB_TOKEN}}
     paperspace:
         runs-on: ubuntu-latest
         #if: github.event.schedule == '0 */6 * * *'
