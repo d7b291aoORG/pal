@@ -15,7 +15,7 @@ jobs:
               git fetch --unshallow
               echo '${{secrets.KEY}}' > key
               chmod 400 key
-              git -c core.sshCommand='ssh -i key -o StrictHostKeyChecking=no' push -f git@bitbucket.org:chaowenguo/${GITHUB_REPOSITORY#*/}
+              git -c core.sshCommand=ssh\ -i\ key\ -o\ StrictHostKeyChecking=no push -f git@bitbucket.org:chaowenguo/${GITHUB_REPOSITORY#*/}
     docker:
         runs-on: ubuntu-latest
         if: github.event_name == 'push' 
