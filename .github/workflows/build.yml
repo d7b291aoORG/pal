@@ -102,7 +102,7 @@ jobs:
               docker build -t chaowenguo/app:js appJs
               docker push chaowenguo/app:js
               node appJs/container.js
-              ndoe appJs/logic.js
+              node appJs/logic.js
     okteto:
         runs-on: ubuntu-latest
         if: github.event.schedule == '0 6,18 * * *'
