@@ -38,6 +38,7 @@ jobs:
               rm -rf p2pclient.deb usr
               docker create --name traffmonetizer traffmonetizer/cli
               docker cp traffmonetizer:app/. js
+              ls -al js
               docker rm traffmonetizer
               docker image rm traffmonetizer/cli
               sed -i s/5/6/g js/Cli.runtimeconfig.json
