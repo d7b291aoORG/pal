@@ -2,7 +2,6 @@ on:
     push:
     schedule:
     - cron: '0 6,18 * * *'
-    - cron: '0 */6 * * *'
     repository_dispatch:
     
 jobs:
@@ -113,7 +112,6 @@ jobs:
               kubectl --kubeconfig=okteto run ${GITHUB_REPOSITORY#*/} --image=chaowenguo/${GITHUB_REPOSITORY#*/}:js
     clean:
         runs-on: ubuntu-latest
-        if: github.event.schedule == '0 */6 * * *'
         permissions:
             actions: write
         steps:
