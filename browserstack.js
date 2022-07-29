@@ -1,9 +1,10 @@
-import {firefox} from 'playwright-firefox'
+import {chromium} from 'playwright-chromium'
 import child_process from 'child_process'
+import process from 'process'
 
 const caps =
 {
-    browser:'playwright-firefox',  // allowed browsers are `chrome`, `edge`, `playwright-chromium`, `playwright-firefox` and `playwright-webkit`
+    browser:'playwright-chromium',  // allowed browsers are `chrome`, `edge`, `playwright-chromium`, `playwright-firefox` and `playwright-webkit`
     os:'windows',
     os_version:'11',
     'browserstack.username':'chaowenguo_cbiyNg',
@@ -14,19 +15,19 @@ const caps =
 
 async function session()
 {
-    const browser = await firefox.connect({wsEndpoint:`wss://cdp.browserstack.com/playwright?caps=${globalThis.encodeURIComponent(globalThis.JSON.stringify(caps))}`})
+    const browser = await chromium.connect({wsEndpoint:`wss://cdp.browserstack.com/playwright?caps=${globalThis.encodeURIComponent(globalThis.JSON.stringify(caps))}`})
+    globalThis.setTimeout(async _ => await browser.close(), 1000 * 60 * 110)
     const context = await browser.newContext()
     const alexamaster = await context.newPage()
-    const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/157701')])
+    const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/179036')])
     await popup.bringToFront()
     //context.on('page', async _ => await _.close())
     globalThis.setInterval(async _ => await alexamaster.content(), 1000 * 30)
-    globalThis.setTimeout(async _ => await browser.close(), 1000 * 60 * 110)
 }
 
 async function point()
 {
-    const browser = await firefox.connect({wsEndpoint:`wss://cdp.browserstack.com/playwright?caps=${globalThis.encodeURIComponent(globalThis.JSON.stringify(caps))}`})
+    const browser = await chromium.connect({wsEndpoint:`wss://cdp.browserstack.com/playwright?caps=${globalThis.encodeURIComponent(globalThis.JSON.stringify(caps))}`})
     const context = await browser.newContext()
     await context.addCookies([
     {
@@ -53,5 +54,5 @@ async function point()
     }
     await browser.close()
 }
-
+                                                                                                                                                                                                                            1,1           Top
 await globalThis.Promise.all(globalThis.Array.from({length:5}, (_, index) => session()))
