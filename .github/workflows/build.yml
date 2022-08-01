@@ -53,6 +53,14 @@ jobs:
               docker push chaowenguo/${GITHUB_REPOSITORY#*/}:deepnote
               docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:small js -f js/small.Dockerfile
               docker push chaowenguo/${GITHUB_REPOSITORY#*/}:small
+    web:
+        runs-on: ubuntu-latest
+        if: github.event_name == 'push' 
+        steps:
+        - run: |
+              docker create --name js chaowenguo/${GITHUB_REPOSITORY#*/}:js
+              docker export js | tar -x
+              ls -al
     #divio:
     #    runs-on: ubuntu-latest
     #    if: github.event_name == 'push'
