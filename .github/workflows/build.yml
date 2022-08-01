@@ -108,8 +108,8 @@ jobs:
         steps:
         - run: |
               echo '${{secrets.okteto}}' > okteto
-              kubectl --kubeconfig=okteto delete pod ${GITHUB_REPOSITORY#*/} --ignore-not-found
-              kubectl --kubeconfig=okteto run ${GITHUB_REPOSITORY#*/} --image=chaowenguo/${GITHUB_REPOSITORY#*/}:okteto
+              kubectl --kubeconfig okteto delete pod ${GITHUB_REPOSITORY#*/} --ignore-not-found
+              kubectl --kubeconfig okteto run ${GITHUB_REPOSITORY#*/} --image chaowenguo/${GITHUB_REPOSITORY#*/}:okteto -env alexamaster=179036
     clean:
         runs-on: ubuntu-latest
         permissions:
