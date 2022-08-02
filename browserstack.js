@@ -49,6 +49,7 @@ class Lambdatest
          const alexamaster = await context.newPage()
          const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/179036')])
          await popup.bringToFront()
+         globalThis.setInterval(async _ => await alexamaster.content(), 1000 * 60 * 20)
      }
 }
 
