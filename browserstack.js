@@ -2,27 +2,54 @@ import {chromium} from 'playwright-chromium'
 import child_process from 'child_process'
 import process from 'process'
 
-const caps =
+class Browserstack
 {
-    browser:'playwright-chromium',  // allowed browsers are `chrome`, `edge`, `playwright-chromium`, `playwright-firefox` and `playwright-webkit`
-    os:'windows',
-    os_version:'11',
-    'browserstack.username':'chaowenguo_cbiyNg',
-    'browserstack.accessKey':'C6QuEssETZeWVa2pwWbf',
-    'browserstack.idleTimeout':'300',
-    'client.playwrightVersion':child_process.spawnSync('npx', ['playwright', '--version']).stdout.toString().trim().split(' ').at(-1) // Playwright version being used on your local project needs to be passed in this capability for BrowserStack to be able to map request and responses correctly
+    static caps =
+    {
+        browser:'chrome',
+        os:'windows',
+        os_version:'11',
+        'browserstack.username':'chaowenguo_cbiyNg',
+        'browserstack.accessKey':'C6QuEssETZeWVa2pwWbf',
+        'browserstack.idleTimeout':'300',
+        'client.playwrightVersion':child_process.spawnSync('npx', ['playwright', '--version']).stdout.toString().trim().split(' ').at(-1) // Playwright version being used on your local project needs to be passed in this capability for BrowserStack to be able to map request and responses correctly
+    }
+
+    static async session()
+    {
+        const browser = await chromium.connect({wsEndpoint:`wss://cdp.browserstack.com/playwright?caps=${globalThis.encodeURIComponent(globalThis.JSON.stringify(this.caps))}`})
+        globalThis.setTimeout(async _ => await browser.close(), 1000 * 60 * 110)
+        const context = await browser.newContext()
+        const alexamaster = await context.newPage()
+        const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/179036')])
+        await popup.bringToFront()
+        //context.on('page', async _ => await _.close())
+        globalThis.setInterval(async _ => await alexamaster.content(), 1000 * 30)
+    }
 }
 
-async function session()
+class Lambdatest
 {
-    const browser = await chromium.connect({wsEndpoint:`wss://cdp.browserstack.com/playwright?caps=${globalThis.encodeURIComponent(globalThis.JSON.stringify(caps))}`})
-    globalThis.setTimeout(async _ => await browser.close(), 1000 * 60 * 110)
-    const context = await browser.newContext()
-    const alexamaster = await context.newPage()
-    const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/179036')])
-    await popup.bringToFront()
-    //context.on('page', async _ => await _.close())
-    globalThis.setInterval(async _ => await alexamaster.content(), 1000 * 30)
+    static caps =
+    {
+        browserName:'Chrome',
+        'LT:Options':
+        {
+            platform:'Windows 11',
+            user:'chaowen.guo1',
+            accessKey:'gFtHgRhVSZxvqIrSBKUaximDHVY5kIBOo79YA5YFczRX7HjKoi',
+            idleTimeout:'1800'
+        }
+     }
+     
+     static async session()
+     {
+         const browser = await chromium.connect({wsEndpoint:`wss://cdp.lambdatest.com/playwright?capabilities=${globalThis.encodeURIComponent(globalThis.JSON.stringify(this.caps))}`})
+         const context = await browser.newContext()
+         const alexamaster = await context.newPage()
+         const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/179036')])
+         await popup.bringToFront()
+     }
 }
 
 async function point()
@@ -54,5 +81,5 @@ async function point()
     }
     await browser.close()
 }
-                                                                                                                                                                                                                            1,1           Top
-await globalThis.Promise.all(globalThis.Array.from({length:5}, (_, index) => session()))
+
+await globalThis.Promise.all([...globalThis.Array.from({length:5}, (_, index) => Browserstack.session()), Lambdatest.session()])                                                            
