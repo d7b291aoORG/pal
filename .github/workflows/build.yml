@@ -162,7 +162,7 @@ jobs:
               #    sed s/VERSION/$i/g kaggle/kaggle.json > kaggle/kernel-metadata.json
               #    kaggle kernels push -p kaggle
               #done
-              curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > package.json
+              curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
               npm install playwright-chromium
               npx playwright install ffmpeg
               xvfb-run node sagemaker.js ${{secrets.PASSWORD}}
