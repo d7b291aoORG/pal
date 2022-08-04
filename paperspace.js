@@ -6,7 +6,7 @@ const paperspace = await browser.newPage({recordVideo:{dir:'videos'}, viewport:n
 await paperspace.goto(`https://console.paperspace.com/login`)
 await paperspace.fill('input[type="email"]', 'chaowen.guo0@gmail.com')
 await paperspace.fill('input[type="password"]', process.argv.at(2))
-await paperspace.click('button#button-login')
+await paperspace.click('button.c-jpjkst.c-jpjkst-kkVNWy-variant-cta')
 await paperspace.waitForNavigation()
 await paperspace.goto('https://console.paperspace.com/chaowenguo/notebook/rsoucni21seer62?file=%2Fpal.ipynb')
 await paperspace.click('button.c-jpjkst.c-jpjkst-kkVNWy-variant-cta')
