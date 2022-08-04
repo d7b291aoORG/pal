@@ -123,8 +123,7 @@ jobs:
               curl https://bitbucket.org/chaowenguo/common/raw/main/clean.py | python - ${{secrets.GITHUB_TOKEN}}
     paperspace:
         runs-on: ubuntu-latest
-        #if: github.event.schedule == '0 */6 * * *'
-        if: github.event_name == 'dummy' 
+        #if: github.event.action == '12h'
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-node@main
