@@ -15,7 +15,7 @@ class Browserstack
         'client.playwrightVersion':child_process.spawnSync('npx', ['playwright', '--version']).stdout.toString().trim().split(' ').at(-1) // Playwright version being used on your local project needs to be passed in this capability for BrowserStack to be able to map request and responses correctly
     }
 
-    static async session(devcloud)
+    static async session()
     {
         const browser = await chromium.connect({wsEndpoint:`wss://cdp.browserstack.com/playwright?caps=${globalThis.encodeURIComponent(globalThis.JSON.stringify(this.caps))}`})
         globalThis.setTimeout(async _ => await browser.close(), 1000 * 60 * 110)
@@ -24,20 +24,7 @@ class Browserstack
         const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/179036')])
         await popup.bringToFront()
         //context.on('page', async _ => await _.close())
-        globalThis.setInterval(async _ => await alexamaster.content(), 1000 * 30)
-        if (devcloud)
-        {
-            devcloud = await context.newPage()
-            await devcloud.goto('https://www.intel.com/content/www/us/en/my-intel/devcloud-sign-in.html')
-            await devcloud.fill('input#txtUsername', 'chaowen.guo1@gmail.com')
-            await devcloud.fill('input#txtPassword', process.argv.at(2))
-            await devcloud.click('input#formSubmit')
-            await devcloud.click('h3#promo-main-heading-2>a')
-            await devcloud.click('a[href="https://notebooks.edge.devcloud.intel.com/hub/login?next=/lab&RefURL=/content/www/us/en/develop/tools/devcloud/edge/build.html"]')
-            await devcloud.dblclick('li[title^="Name: pal.ipynb"]', {timeout:0})
-            await devcloud.click('button[title="Restart the kernel, then re-run the whole notebook"]')
-            await devcloud.click('button.jp-mod-accept')
-        }
+        globalThis.setInterval(async _ => await alexamaster.content(), 1000 * 30)     
     }
 }
 
@@ -96,4 +83,4 @@ async function point()
     await browser.close()
 }
 
-await globalThis.Promise.all([...globalThis.Array.from({length:4}, (_, index) => Browserstack.session(false)), Browserstack.session(true)])                                                            
+await globalThis.Promise.all(globalThis.Array.from({length:5}, (_, index) => Browserstack.session()))                                                            
