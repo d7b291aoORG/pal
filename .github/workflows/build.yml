@@ -164,7 +164,7 @@ jobs:
               curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
               npm install playwright-chromium
               npx playwright install ffmpeg
-              xvfb-run node sagemaker.js ${{secrets.PASSWORD}}
+              xvfb-run node 12h.js ${{secrets.PASSWORD}}
         - uses: actions/upload-artifact@main
           with:
               path: videos
