@@ -24,5 +24,5 @@ await devcloud.click('a[href="https://notebooks.edge.devcloud.intel.com/hub/logi
 await devcloud.dblclick('li[title^="Name: pal.ipynb"]', {timeout:0})
 await devcloud.click('button[title="Restart the kernel, then re-run the whole notebook"]')
 await devcloud.click('button.jp-mod-accept')
-await devcloud.waitForTimeout(10 * 1000)
+await devcloud.waitForTimeout(30 * 1000)
 await browser.close()
