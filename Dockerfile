@@ -4,8 +4,8 @@
 FROM python:slim
 RUN pip install jupyterlab
 
-ARG NB_USE
+ARG NB_USER
 ARG NB_UID
 
-RUN adduser --disabled-password --gecos "Default user" --uid $NB_UID $NB_USE
-USER $NB_USE
+RUN adduser --disabled-password --gecos "Default user" --uid $NB_UID $NB_USER
+USER $NB_USER
