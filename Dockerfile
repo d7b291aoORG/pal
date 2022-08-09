@@ -7,5 +7,8 @@ RUN pip install jupyterlab
 ARG NB_USER
 ARG NB_UID
 
-RUN useradd --disabled-password --uid $NB_UID $NB_USER
+RUN useradd --disabled-password \
+    --gecos "Default user" \
+    --uid ${NB_UID} \
+    ${NB_USER}
 USER $NB_USER
