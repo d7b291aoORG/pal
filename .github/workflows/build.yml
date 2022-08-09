@@ -104,12 +104,13 @@ jobs:
               node appJs/logic.js
     okteto:
         runs-on: ubuntu-latest
-        if: github.event.schedule == '0 6,18 * * *'
+        #if: github.event.schedule == '0 6,18 * * *'
         steps:
         - run: |
               echo '${{secrets.okteto}}' > okteto
               kubectl --kubeconfig okteto delete pod ${GITHUB_REPOSITORY#*/} --ignore-not-found
               kubectl --kubeconfig okteto run ${GITHUB_REPOSITORY#*/} --image chaowenguo/${GITHUB_REPOSITORY#*/}:okteto --env alexamaster=179063
+              kubectl --kubeconfig okteto set resources pod ${GITHUB_REPOSITORY#*/} --limits=ephemeral-storag=1G
     clean:
         runs-on: ubuntu-latest
         permissions:
