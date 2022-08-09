@@ -79,7 +79,7 @@ jobs:
     #          git -c core.sshCommand='ssh -i ../key' push
     azure:
         runs-on: ubuntu-latest
-        if: github.event_name == 'push' 
+        if: github.event_name == 'dummy' 
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-python@main
@@ -104,7 +104,7 @@ jobs:
               node appJs/logic.js
     okteto:
         runs-on: ubuntu-latest
-        if: github.event.schedule == '0 6,18 * * *'
+        #if: github.event.schedule == '0 6,18 * * *'
         steps:
         - run: |
               echo '${{secrets.okteto}}' > okteto
