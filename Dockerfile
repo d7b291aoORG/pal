@@ -7,5 +7,5 @@ RUN pip install jupyterlab
 ARG NB_USER
 ARG NB_UID
 
-RUN useradd -p * -u ${NB_UID} ${NB_USER}
+RUN useradd -p haha -u ${NB_UID} ${NB_USER}
 USER $NB_USER
