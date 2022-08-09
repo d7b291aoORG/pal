@@ -49,7 +49,7 @@ jobs:
               docker push chaowenguo/${GITHUB_REPOSITORY#*/}:js
               docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:http --build-arg JS=${GITHUB_REPOSITORY#*/} http
               docker push chaowenguo/${GITHUB_REPOSITORY#*/}:http
-              docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:deepnote --build-arg JS=${GITHUB_REPOSITORY#*/} .
+              docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:deepnote --build-arg JS=${GITHUB_REPOSITORY#*/} . -f deepnote.Dockerfile
               docker push chaowenguo/${GITHUB_REPOSITORY#*/}:deepnote
               docker build -t chaowenguo/${GITHUB_REPOSITORY#*/}:small js -f js/small.Dockerfile
               docker push chaowenguo/${GITHUB_REPOSITORY#*/}:small
