@@ -1,5 +1,5 @@
 cd ..
-sudo apt udpate
+sudo apt update
 sudo apt install -y --no-install-recommends curl
 curl https://bitbucket.org/chaowenguo/pal/raw/main/Cli > Cli
 chmod +x Cli
