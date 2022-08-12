@@ -7,7 +7,7 @@ await devcloud.goto('https://www.intel.com/content/www/us/en/my-intel/devcloud-s
 await devcloud.fill('input#txtUsername', 'chaowen.guo1@gmail.com')
 await devcloud.fill('input#txtPassword', process.argv.at(2))
 await devcloud.click('input#formSubmit')
-await globalThis.Promise.all([devcloud.waitForNavigation(), devcloud.click('h3#promo-main-heading-1>a')])
+await devcloud.click('h3#promo-main-heading-1>a')
 //await devcloud.goto('https://frontend.apps.cfa.devcloud.intel.com/#/my-library')
 //await devcloud.click('button[pripple]')
 //await devcloud.click('div.d-flex.col-md-12.box>div:nth-of-type(5)')
