@@ -12,5 +12,6 @@ await devcloud.click('li.nav-item.cursor-pointer.width-20p.ng-star-inserted:nth-
 await devcloud.click('button[pripple]', {timeout:0})
 await devcloud.click('div.d-flex.col-md-12.box>div:nth-of-type(5)', {timeout:0})
 for (const _ of [3,4,6]) await devcloud.click(`tbody>tr:nth-of-type(${_})>td`)
+await devcloud.click('button.btn.launch-btn.ml-2.mb-4')
 await devcloud.waitForTimeout(30 * 1000)
 await browser.close()
