@@ -21,10 +21,10 @@ class Browserstack
         globalThis.setTimeout(async _ => await browser.close(), 1000 * 60 * 110)
         const context = await browser.newContext()
         const alexamaster = await context.newPage()
-        const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/179036')])
+        const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/180060')])
         await popup.bringToFront()
         //context.on('page', async _ => await _.close())
-        globalThis.setInterval(async _ => await alexamaster.content(), 1000 * 30)     
+        globalThis.setInterval(async _ => await alexamaster.content(), 1000 * 15)     
     }
 }
 
