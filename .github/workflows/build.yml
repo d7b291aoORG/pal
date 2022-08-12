@@ -169,22 +169,24 @@ jobs:
         - uses: actions/upload-artifact@main
           with:
               path: videos
-    two:
+    devcloud:
         runs-on: ubuntu-latest
-        if: github.event_name == 'dummy'
+        #if: github.event_name == 'dummy'
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-node@main
           with:
               node-version: 18.x
         - run: |
-              echo '${{secrets.GCLOUD}}' > gcloud
-              curl https://raw.githubusercontent.com/$GITHUB_REPOSITORY_OWNER/common/main/package.json > package.json
-              npm install google-auth-library
-              node 2h.js ${{secrets.GITHUB}}
+              curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
+              npm install playwright-chromium
+              npx playwright install ffmpeg
+              xvfb-run node devcloud.js ${{secrets.PASSWORD}}
+        - uses: actions/upload-artifact@main
+          with:
+              path: videos
               
-              #google cloud shell
-         
+     #google cloud shell 
      #gcloud projects create chaowenguo
               #gcloud iam service-accounts create chaowenguo
               #gcloud iam service-accounts list#to get email address#chaowenguo@chaowenguo.iam.gserviceaccount.com
