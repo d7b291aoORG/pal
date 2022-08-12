@@ -171,13 +171,16 @@ jobs:
               path: videos
     devcloud:
         runs-on: ubuntu-latest
-        if: github.event_name == 'dummy'
+        #if: github.event_name == 'dummy'
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-node@main
           with:
               node-version: 18.x
-        - run: |
+        - env:
+              PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+              DEBUG: pw:api
+          run: |
               curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
               npm install playwright-chromium
               npx playwright install ffmpeg
