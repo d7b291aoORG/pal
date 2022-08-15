@@ -17,5 +17,5 @@ curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.jso
 npm install playwright-chromium
 curl https://bitbucket.org/chaowenguo/pal/raw/main/js/pal.js > pal.js
 sed -i s@channel:\'chrome\'@executablePath:\'/usr/lib/chromium-browser/chromium-browser\'@g pal.js
-export alexamaster=179036
+export alexamaster=180120
 xvfb-run node pal.js
