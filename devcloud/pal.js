@@ -6,3 +6,9 @@ const context = await browser.newContext()
 const alexamaster = await context.newPage()
 const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto(`https://www.alexamaster.net/ads/autosurf/${process.env.alexamaster}`)])
 await popup.bringToFront()
+const dailymotion = await context.newPage()
+for (const _ of globalThis.Array(10).keys())
+{
+    await dailymotion.goto('https://www.dailymotion.com/partner/x2mdd5q/media/video/edit/x87ytjz')
+    await dailymotion.click('button.playback_button')
+}
