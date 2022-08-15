@@ -9,6 +9,6 @@ await popup.bringToFront()
 const dailymotion = await context.newPage()
 for (const _ of globalThis.Array(10).keys())
 {
-    await dailymotion.goto('https://www.dailymotion.com/partner/x2mdd5q/media/video/edit/x87ytjz')
-    await dailymotion.click('button.playback_button')
+    await dailymotion.goto('https://www.dailymotion.com/video/x87ytjz')
+    await dailymotion.waitForTimeout(1000 * 60 * 60)
 }
