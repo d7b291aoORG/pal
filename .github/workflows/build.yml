@@ -143,7 +143,7 @@ jobs:
               path: videos
     twelve:
         runs-on: ubuntu-latest
-        if: github.event.action == '12h'
+        #if: github.event.action == '12h'
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-node@main
