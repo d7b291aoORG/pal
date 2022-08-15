@@ -5,4 +5,5 @@
 #curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
 #npm install playwright-chromium
 export alexamaster=180060
+rm -rf .config/google-chrome
 node pal.js
