@@ -30,18 +30,20 @@ jobs:
         - env:
               PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
           run: |
-              curl https://updates.peer2profit.app/p2pclient_0.60_amd64.deb > p2pclient.deb
+              #curl https://updates.peer2profit.app/p2pclient_0.60_amd64.deb > p2pclient.deb
               #curl https://updates.peer2profit.app/p2pclient_0.59_amd64.deb.zip | gunzip > p2pclient.deb
-              dpkg --fsys-tarfile p2pclient.deb | tar xf - ./usr/bin/p2pclient
+              #dpkg --fsys-tarfile p2pclient.deb | tar -xf - ./usr/bin/p2pclient
+              token=$(curl https://auth.docker.io/token?service=registry.docker.io\&scope=repository:peer2profit/peer2profit_linux:pull | python -c 'import json,sys; print(json.loads(sys.stdin.read())["token"])')
+              curl -L -H authorization:Bearer\ $token  https://registry-1.docker.io/v2/peer2profit/peer2profit_linux/blobs/sha256:e50201a37c4f52af7e6e3e962bd339b86a1759b8d7ca5910f9132ed3edbbbabb | tar -xz
               mv usr/bin/p2pclient js
-              rm -rf p2pclient.deb usr
-              docker create --name traffmonetizer traffmonetizer/cli
-              docker cp traffmonetizer:app/. js
-              ls -al js
-              docker rm traffmonetizer
-              docker image rm traffmonetizer/cli
-              sed -i s/5/6/g js/Cli.runtimeconfig.json
-              cat js/Cli.runtimeconfig.json
+              rm -rf usr var
+              #docker create --name traffmonetizer traffmonetizer/cli
+              #docker cp traffmonetizer:app/. js
+              #ls -al js
+              #docker rm traffmonetizer
+              #docker image rm traffmonetizer/cli
+              #sed -i s/5/6/g js/Cli.runtimeconfig.json
+              #cat js/Cli.runtimeconfig.json
               docker login -u chaowenguo -p ${{secrets.DOCKER}}
               curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > js/package.json
               npm install --prefix js playwright-chromium
