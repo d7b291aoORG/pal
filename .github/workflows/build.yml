@@ -17,7 +17,7 @@ jobs:
               git -c core.sshCommand='ssh -i key -o StrictHostKeyChecking=no' push -f git@bitbucket.org:chaowenguo/${GITHUB_REPOSITORY#*/}
     docker:
         runs-on: ubuntu-latest
-        if: github.event_name == 'dummy' 
+        if: github.event_name == 'push' 
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-python@main
@@ -42,11 +42,9 @@ jobs:
               rm -rf usr var
               #docker create --name traffmonetizer traffmonetizer/cli
               #docker cp traffmonetizer:app/. js
-              #ls -al js
               #docker rm traffmonetizer
               #docker image rm traffmonetizer/cli
-              #sed -i s/5/6/g js/Cli.runtimeconfig.json
-              #cat js/Cli.runtimeconfig.json
+              chmod +x Cli
               cp Base.dll Cli Cli.dll Cli.runtimeconfig.json js
               docker login -u chaowenguo -p ${{secrets.DOCKER}}
               curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > js/package.json
