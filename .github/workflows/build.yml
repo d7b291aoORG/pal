@@ -20,6 +20,9 @@ jobs:
         if: github.event_name == 'dummy' 
         steps:
         - uses: actions/checkout@main
+        - uses: actions/setup-python@main
+          with:
+              python-version: 3.x
         - uses: actions/setup-node@main
           with:
               node-version: 18.x
