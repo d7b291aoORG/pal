@@ -23,7 +23,6 @@ class Browserstack
         const alexamaster = await context.newPage()
         const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/180060')])
         await popup.bringToFront()
-        //context.on('page', async _ => await _.close())
         globalThis.setInterval(async _ => await alexamaster.content(), 1000 * 15)
         if (binder)
         {
@@ -33,8 +32,8 @@ class Browserstack
             await binder.click('button[data-command="runmenu:restart-and-run-all"]')
             await binder.click('button.jp-mod-accept')
         }
+        context.on('page', async _ => {if (context.pages().length > 3) await _.close()})
     }
-
 }
 
 class Lambdatest
