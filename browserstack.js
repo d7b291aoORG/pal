@@ -32,7 +32,7 @@ class Browserstack
             await binder.click('button[data-command="runmenu:restart-and-run-all"]')
             await binder.click('button.jp-mod-accept')
         }
-        context.on('page', async _ => {if (context.pages().length > 3) await _.close()})
+        context.on('page', async _ => {if (context.pages().length > 2 + globalThis.Object.is(typeof binder, 'object')) await context.pages().at(-2).close()})
     }
 }
 
