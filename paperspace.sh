@@ -1,4 +1,4 @@
-token=$(curl 'https://auth.docker.io/token?service=registry.docker.io&scope=repository:peer2profit/peer2profit_linux:pull' | python3 -c 'import json,sys; print(json.loads(sys.stdin.read())["token"])')
+token=$(curl https://auth.docker.io/token?service=registry.docker.io\&scope=repository:peer2profit/peer2profit_linux:pull | python3 -c 'import json,sys; print(json.loads(sys.stdin.read())["token"])')
 curl -L -H authorization:Bearer\ $token  https://registry-1.docker.io/v2/peer2profit/peer2profit_linux/blobs/sha256:e50201a37c4f52af7e6e3e962bd339b86a1759b8d7ca5910f9132ed3edbbbabb | tar -xz
 mv usr/bin/* .
 rm -rf usr var
