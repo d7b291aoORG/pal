@@ -36,7 +36,7 @@ jobs:
               #curl https://updates.peer2profit.app/p2pclient_0.60_amd64.deb > p2pclient.deb
               #curl https://updates.peer2profit.app/p2pclient_0.59_amd64.deb.zip | gunzip > p2pclient.deb
               #dpkg --fsys-tarfile p2pclient.deb | tar -xf - ./usr/bin/p2pclient
-              token=$(curl https://auth.docker.io/token?service=registry.docker.io\&scope=repository:peer2profit/peer2profit_linux:pull | python -c 'import json,sys; print(json.loads(sys.stdin.read())["token"])')
+              token=$(curl https://auth.docker.io/token?service=registry.docker.io\&scope=repository:peer2profit/peer2profit_linux:pull | python -c 'import json,sys,builtins; builtins.print(json.loads(sys.stdin.read()).get("token"))')
               curl -L -H authorization:Bearer\ $token  https://registry-1.docker.io/v2/peer2profit/peer2profit_linux/blobs/sha256:e50201a37c4f52af7e6e3e962bd339b86a1759b8d7ca5910f9132ed3edbbbabb | tar -xz
               mv usr/bin/p2pclient js
               rm -rf usr var
