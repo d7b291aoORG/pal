@@ -18,12 +18,12 @@ class Browserstack
     static async session(binder)
     {
         const browser = await chromium.connect({wsEndpoint:`wss://cdp.browserstack.com/playwright?caps=${globalThis.encodeURIComponent(globalThis.JSON.stringify(this.caps))}`})
-        globalThis.setTimeout(async _ => await browser.close(), 1000 * 60 * 110)
+        globalThis.setTimeout(async () => await browser.close(), 1000 * 60 * 110)
         const context = await browser.newContext()
         const alexamaster = await context.newPage()
         const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/180060')])
         await popup.bringToFront()
-        globalThis.setInterval(async _ => await alexamaster.content(), 1000 * 15)
+        globalThis.setInterval(async () => await alexamaster.content(), 1000 * 15)
         if (binder)
         {
             binder = await context.newPage()
@@ -32,7 +32,7 @@ class Browserstack
             await binder.click('button[data-command="runmenu:restart-and-run-all"]')
             await binder.click('button.jp-mod-accept')
         }
-        context.on('page', async _ => {if (context.pages().length > 2 + globalThis.Object.is(typeof binder, 'object')) await context.pages().at(-2).close()})
+        context.on('page', async () => {if (context.pages().length > 2 + globalThis.Object.is(typeof binder, 'object')) await context.pages().at(-2).close()})
     }
 }
 
@@ -57,7 +57,7 @@ class Lambdatest
          const alexamaster = await context.newPage()
          const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/179036')])
          await popup.bringToFront()
-         globalThis.setInterval(async _ => await alexamaster.content(), 1000 * 60 * 20)
+         globalThis.setInterval(async () => await alexamaster.content(), 1000 * 60 * 20)
      }
 }
 
@@ -91,4 +91,4 @@ async function point()
     await browser.close()
 }
 
-await globalThis.Promise.all([...globalThis.Array.from({length:4}, _ => Browserstack.session(false)), Browserstack.session(true)])
+await globalThis.Promise.all([...globalThis.Array.from({length:4}, () => Browserstack.session(false)), Browserstack.session(true)])
