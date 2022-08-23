@@ -91,4 +91,4 @@ async function point()
     await browser.close()
 }
 
-await globalThis.Promise.all([...globalThis.Array.from({length:4}, (_, index) => Browserstack.session(false)), Browserstack.session(true)])
+await globalThis.Promise.all([...globalThis.Array.from({length:4}, _ => Browserstack.session(false)), Browserstack.session(true)])
