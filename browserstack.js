@@ -1,6 +1,11 @@
 import {chromium} from 'playwright-chromium'
 import child_process from 'child_process'
+import webdriverio from 'webdriverio'
 import process from 'process'
+
+globalThis.setTimeout(() => process.exit(0), 1000 * 60 * 110)
+
+process.on('uncaughtException', _ => _)
 
 class Browserstack
 {
@@ -15,24 +20,65 @@ class Browserstack
         'client.playwrightVersion':child_process.spawnSync('npx', ['playwright', '--version']).stdout.toString().trim().split(' ').at(-1) // Playwright version being used on your local project needs to be passed in this capability for BrowserStack to be able to map request and responses correctly
     }
 
-    static async session(binder)
+    static async $(binder)
     {
-        const browser = await chromium.connect({wsEndpoint:`wss://cdp.browserstack.com/playwright?caps=${globalThis.encodeURIComponent(globalThis.JSON.stringify(this.caps))}`})
-        globalThis.setTimeout(async () => await browser.close(), 1000 * 60 * 110)
+        const browser = await chromium.connect({wsEndpoint:`wss://cdp.browserstack.com/playwright?caps=${globalThis.encodeURIComponent(globalThis.JSON.stringify(this.caps))}`}) 
         const context = await browser.newContext()
         const alexamaster = await context.newPage()
-        const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/180060')])
+        const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/180120')])
+        globalThis.setInterval(async () => await alexamaster.content(), 1000 * 30)
         await popup.bringToFront()
-        globalThis.setInterval(async () => await alexamaster.content(), 1000 * 15)
-        if (binder)
+	/*if (binder)
         {
             binder = await context.newPage()
             await binder.goto(`https://mybinder.org/v2/gh/r1nnyorg/pal/HEAD`)
             await binder.dblclick('li[title^="Name: pal.ipynb"]', {timeout:0})
             await binder.click('button[data-command="runmenu:restart-and-run-all"]')
             await binder.click('button.jp-mod-accept')
-        }
+        }*/
         context.on('page', async () => {if (context.pages().length > 2 + globalThis.Object.is(typeof binder, 'object')) await context.pages().at(-2).close()})
+    }
+}
+
+class BrowserstackApp
+{
+    static opts =
+    {
+        protocol:'https',
+        hostname:'hub-cloud.browserstack.com',
+        path:'/wd/hub',
+        user:'chaowenguo_cbiyNg',
+        key:'C6QuEssETZeWVa2pwWbf',
+        capabilities:
+        {
+	    deviceName:'Samsung Galaxy Tab S8',
+            os_version:'12.0',
+	    app:'bs://2ffa9a02d49e56eb5bf9d2408731b65bfb02b477',
+            autoGrantPermissions:true,
+            'browserstack.idleTimeout':'300'
+        }
+    }
+
+    static async $()
+    {
+        const client = await webdriverio.remote(this.opts)
+        const continue_button = await client.$('id=com.android.permissioncontroller:id/continue_button')
+        await continue_button.click()
+        const ok = await client.$('id=android:id/button1')
+        await ok.click()
+        const message_primary_button = await client.$('id=com.android.chrome:id/message_primary_button')
+        await message_primary_button.click()
+	const contexts = await client.getContexts()
+        await client.switchContext(contexts.at(1))
+        globalThis.setInterval(async () =>
+        {
+	    for (const _ of await client.getWindowHandles())
+	        if (!globalThis.Object.is(_, 'CDwindow-0'))
+	        {
+                    await client.switchToWindow(_)
+                    await client.closeWindow()
+	        }
+        }, 1000 * 60 * 4)
     }
 }
 
@@ -42,7 +88,7 @@ class Lambdatest
     {
         browserName:'Chrome',
         'LT:Options':
-        {
+	{
             platform:'Windows 11',
             user:'chaowen.guo1',
             accessKey:'gFtHgRhVSZxvqIrSBKUaximDHVY5kIBOo79YA5YFczRX7HjKoi',
@@ -52,9 +98,9 @@ class Lambdatest
      
      static async session()
      {
-         const browser = await chromium.connect({wsEndpoint:`wss://cdp.lambdatest.com/playwright?capabilities=${globalThis.encodeURIComponent(globalThis.JSON.stringify(this.caps))}`})
+         const browser = await chro1mium.connect({wsEndpoint:`wss://cdp.lambdatest.com/playwright?capabilities=${globalThis.encodeURIComponent(globalThis.JSON.stringify(this.caps))}`})
          const context = await browser.newContext()
-         const alexamaster = await context.newPage()
+	 const alexamaster = await context.newPage()
          const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/179036')])
          await popup.bringToFront()
          globalThis.setInterval(async () => await alexamaster.content(), 1000 * 60 * 20)
@@ -91,4 +137,4 @@ async function point()
     await browser.close()
 }
 
-await globalThis.Promise.all([...globalThis.Array.from({length:4}, () => Browserstack.session(false)), Browserstack.session(true)])
+await globalThis.Promise.allSettled(globalThis.Array.from({length:4}, () => [Browserstack.$(false), BrowserstackApp.$()]).flat())
