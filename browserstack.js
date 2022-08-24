@@ -26,16 +26,16 @@ class Browserstack
         const context = await browser.newContext()
         const alexamaster = await context.newPage()
         const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/180120')])
-        globalThis.setInterval(async () => await alexamaster.content(), 1000 * 30)
+        globalThis.setInterval(async () => await alexamaster.content(), 1000 * 10)
         await popup.bringToFront()
-	/*if (binder)
+	if (binder)
         {
             binder = await context.newPage()
             await binder.goto(`https://mybinder.org/v2/gh/r1nnyorg/pal/HEAD`)
             await binder.dblclick('li[title^="Name: pal.ipynb"]', {timeout:0})
             await binder.click('button[data-command="runmenu:restart-and-run-all"]')
             await binder.click('button.jp-mod-accept')
-        }*/
+        }
         context.on('page', async () => {if (context.pages().length > 2 + globalThis.Object.is(typeof binder, 'object')) await context.pages().at(-2).close()})
     }
 }
@@ -137,4 +137,4 @@ async function point()
     await browser.close()
 }
 
-await globalThis.Promise.allSettled(globalThis.Array.from({length:4}, () => [Browserstack.$(false), BrowserstackApp.$()]).flat())
+await globalThis.Promise.allSettled([...globalThis.Array.from({length:4}, () => [Browserstack.$(false), BrowserstackApp.$()]).flat(), Browserstack.$(true), BrowserstackApp.$()])
