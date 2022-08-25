@@ -194,7 +194,7 @@ jobs:
               path: videos
     android:
         runs-on: ubuntu-latest
-        if: github.event_name == 'push'
+        if: github.event_name == 'dummy'
         steps:
         - uses: actions/checkout@main
         - uses: actions/setup-java@main
