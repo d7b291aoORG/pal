@@ -191,7 +191,20 @@ jobs:
               xvfb-run node devcloud.js ${{secrets.PASSWORD}}
         - uses: actions/upload-artifact@main
           with:
-              path: videos
+              path: videos    
+    browserstack:
+        runs-on: ubuntu-latest
+        if: github.event.action == '2h'
+        steps:
+        - uses: actions/checkout@main
+        - uses: actions/setup-node@main
+          with:
+              node-version: 18.x
+        - timeout-minutes: 110
+          run: |
+              curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
+              npm install playwright-chromium webdriverio
+              node browserstack.js
               
      #google cloud shell 
      #gcloud projects create chaowenguo
