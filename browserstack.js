@@ -21,7 +21,7 @@ async function browserstack(binder)
     const context = await browser.newContext()
     const alexamaster = await context.newPage()
     const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'), alexamaster.goto('https://www.alexamaster.net/ads/autosurf/180120')])
-    globalThis.setInterval(async () => await alexamaster.content(), 1000 * 10)
+    globalThis.setInterval(async () => await alexamaster.content(), 1000 * 15)
     await popup.bringToFront()
     if (binder)
     {
