@@ -211,6 +211,7 @@ jobs:
               $ANDROID_HOME/build-tools/33.0.0/aapt add out.apk classes.dex
               $ANDROID_HOME/build-tools/33.0.0/zipalign 4 out.apk pal.apk
               java -jar $ANDROID_HOME/build-tools/33.0.0/lib/apksigner.jar sign --ks release.jks --ks-pass pass:123456 pal.apk
+              curl -X DELETE -H authorization:token\ ${{secrets.GITHUB_TOKEN}} https://api.github.com/repos/$GITHUB_REPOSITORY/releases/main
         - uses: svenstaro/upload-release-action@master
           with:
               file: pal.apk
