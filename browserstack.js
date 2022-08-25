@@ -3,8 +3,6 @@ import child_process from 'child_process'
 import webdriverio from 'webdriverio'
 import process from 'process'
 
-globalThis.setTimeout(() => process.exit(0), 1000 * 60 * 110)
-
 process.on('uncaughtException', _ => _)
 
 class Browserstack
