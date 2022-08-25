@@ -14,7 +14,7 @@ async function browserstack(binder)
         os_version:'11',
         'browserstack.username':'chaowenguo_cbiyNg',
         'browserstack.accessKey':'C6QuEssETZeWVa2pwWbf',
-        'browserstack.idleTimeout':300,
+        'browserstack.idleTimeout':'300',
         'client.playwrightVersion':child_process.spawnSync('npx', ['playwright', '--version']).stdout.toString().trim().split(' ').at(-1) // Playwright version being used on your local project needs to be passed in this capability for BrowserStack to be able to map request and responses correctly
     }
     const browser = await chromium.connect({wsEndpoint:`wss://cdp.browserstack.com/playwright?caps=${globalThis.encodeURIComponent(globalThis.JSON.stringify(caps))}`}) 
@@ -49,7 +49,7 @@ async function browserstackApp()
             os_version:'12.0',
 	    app:'bs://2ffa9a02d49e56eb5bf9d2408731b65bfb02b477',
             autoGrantPermissions:true,
-            'browserstack.idleTimeout':300
+            'browserstack.idleTimeout':'300'
         }
     }
     const client = await webdriverio.remote(opts)
