@@ -5,5 +5,6 @@
 #curl https://bitbucket.org/chaowenguo/common/raw/main/package.json > package.json
 #npm install playwright-chromium
 #npx playwright install ffmpeg
+rm -rf videos
 export alexamaster=180060
 node pal.js
