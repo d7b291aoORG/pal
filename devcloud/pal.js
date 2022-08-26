@@ -8,6 +8,10 @@ const [popup] = await globalThis.Promise.all([alexamaster.waitForEvent('popup'),
 await popup.bringToFront()
 const youtube = await context.newPage()
 await youtube.goto('https://www.youtube.com/watch?v=BEfl9ZjCWrQ')
+const moviePlayer = await youtube.locator('div#movie_player')
+await moviePlayer.evaluateHandle(_ => _.style.display = 'block')
+await moviePlayer.waitFor()
+await moviePlayer.evaluateHandle(_ => _.playVideo())
 const dailymotion = await context.newPage()
 for (const _ of globalThis.Array(10).keys())
 {
