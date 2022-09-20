@@ -226,7 +226,9 @@ jobs:
               sed -i s/1/0/g src/donate.h
               mkdir build
               cd build
-              ls -al $ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64
+              ls -al $ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/lib
+              ls -al $ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/lib64
+              ls -al $ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/sys_root
               #-DCMAKE_C_COMPILER=$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin/clang -DCMAKE_C_COMPILER_TARGET=aarch64-linux-android33
               cmake .. -DCMAKE_PROJECT_NAME=android -DCMAKE_SYSTEM_NAME=Android -DCMAKE_SYSTEM_PROCESSOR=aarch64 -DCMAKE_ANDROID_API=33 -DUV_INCLUDE_DIR=$GITHUB_WORKSPACE/package/data/data/com.termux/files/usr/include -DUV_LIBRARY=$GITHUB_WORKSPACE/package/data/data/com.termux/files/usr/lib/libuv.so -DWITH_TLS=OFF -DWITH_HWLOC=OFF -DWITH_OPENCL=OFF -DWITH_CUDA=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
               make
