@@ -224,6 +224,7 @@ jobs:
               git clone https://github.com/xmrig/xmrig
               cd xmrig
               sed -i s/1/0/g src/donate.h
+              sed -i s/pthread\ rt\ dl\ log/dl\ log/g CMakeLists.txt
               mkdir build
               cd build
               #-DCMAKE_C_COMPILER=$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin/clang -DCMAKE_C_COMPILER_TARGET=aarch64-linux-android33
