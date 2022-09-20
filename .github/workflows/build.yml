@@ -211,8 +211,7 @@ jobs:
               $ANDROID_HOME/build-tools/33.0.0/aapt2 link out.zip -I $ANDROID_HOME/platforms/android-33/android.jar --manifest AndroidManifest.xml -o out.apk
               javac -Xlint:deprecation -cp $ANDROID_HOME/platforms/android-33/android.jar com/main/*.java
               java -cp $ANDROID_HOME/build-tools/33.0.0/lib/d8.jar com.android.tools.r8.D8 com/main/*.class --lib $ANDROID_HOME/platforms/android-33/android.jar --release
-              curl https://packages.termux.dev/apt/termux-main/pool/main/t/termux-keyring/termux-keyring_3.9_all.deb > termux-keyring.deb
-              sudo apt install -y --no-install-recommends ./termux-keyring.deb
+              sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5A897D96E57CF20C
               sudo tee /etc/apt/sources.list.d/android.list <<EOF
               deb [arch=arm64] https://packages.termux.dev/apt/termux-main stable main
               EOF
