@@ -217,7 +217,10 @@ jobs:
               EOF
               sudo apt update
               sudo apt download libuv-static:aarch64
-              dpkg -x libuv*.deb package
+              for i in *.deb
+              do
+                  dpkg -x $i package
+              done
               git clone https://github.com/xmrig/xmrig
               cd xmrig
               sed -i s/1/0/g src/donate.h
