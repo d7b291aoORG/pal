@@ -210,9 +210,7 @@ jobs:
               $ANDROID_HOME/build-tools/33.0.0/aapt2 compile --dir res -o out.zip
               $ANDROID_HOME/build-tools/33.0.0/aapt2 link out.zip -I $ANDROID_HOME/platforms/android-33/android.jar --manifest AndroidManifest.xml -o out.apk
               javac -Xlint:deprecation -cp $ANDROID_HOME/platforms/android-33/android.jar com/main/*.java
-              java -cp $ANDROID_HOME/build-tools/33.0.0/lib/d8.jar com.android.tools.r8.D8 com/main/*.class --lib $ANDROID_HOME/platforms/android-33/android.jar --release 
-              #locate aarch64-linux-android-gcc
-              ls -al $ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android33-clang++
+              java -cp $ANDROID_HOME/build-tools/33.0.0/lib/d8.jar com.android.tools.r8.D8 com/main/*.class --lib $ANDROID_HOME/platforms/android-33/android.jar --release
               #sudo apt update
               #sudo apt install -y --no-install-recommends libhwloc-dev libuv1-dev libudev-dev
               git clone https://github.com/xmrig/xmrig
