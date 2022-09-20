@@ -17,6 +17,6 @@ public class MainActivity extends android.app.Activity
             java.lang.System.out.println(new java.lang.String(process.getInputStream().readAllBytes()));
         }
         catch (final java.lang.Exception e){java.lang.System.out.println(e);}
-        super.startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://www.alexamaster.net/ads/autosurf/180120")));
+        //super.startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://www.alexamaster.net/ads/autosurf/180120")));
     }  
 }
