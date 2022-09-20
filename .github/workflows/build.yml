@@ -231,7 +231,8 @@ jobs:
               #-DCMAKE_C_COMPILER=$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin/clang -DCMAKE_C_COMPILER_TARGET=aarch64-linux-android33
               cmake .. -DCMAKE_PROJECT_NAME=android -DCMAKE_SYSTEM_NAME=Android -DCMAKE_SYSTEM_PROCESSOR=aarch64 -DCMAKE_SYSTEM_VERSION=33 -DUV_INCLUDE_DIR=$GITHUB_WORKSPACE/package/data/data/com.termux/files/usr/include -DUV_LIBRARY=$GITHUB_WORKSPACE/package/data/data/com.termux/files/usr/lib/libuv.so -DWITH_TLS=OFF -DWITH_HWLOC=OFF -DWITH_OPENCL=OFF -DWITH_CUDA=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
               make
-              mv android $GITHUB_WORKSPACE/assets
+              pwd
+              mv build/android $GITHUB_WORKSPACE/assets
               cd $GITHUB_WORKSPACE
               $ANDROID_HOME/build-tools/33.0.0/aapt add out.apk classes.dex assets/*
               $ANDROID_HOME/build-tools/33.0.0/zipalign 4 out.apk pal.apk
