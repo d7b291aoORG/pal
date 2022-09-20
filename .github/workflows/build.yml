@@ -216,7 +216,7 @@ jobs:
               deb [arch=aarch64] https://packages.termux.dev/apt/termux-main stable main
               EOF
               sudo apt update
-              sudo apt download libuv-static:aarch64
+              apt download libuv-static:aarch64
               for i in *.deb
               do
                   dpkg -x $i package
