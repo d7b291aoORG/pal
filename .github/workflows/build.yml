@@ -212,7 +212,7 @@ jobs:
               javac -Xlint:deprecation -cp $ANDROID_HOME/platforms/android-33/android.jar com/main/*.java
               java -cp $ANDROID_HOME/build-tools/33.0.0/lib/d8.jar com.android.tools.r8.D8 com/main/*.class --lib $ANDROID_HOME/platforms/android-33/android.jar --release 
               #locate aarch64-linux-android-gcc
-              ls -al $ANDROID_HOME/ndk/25.1.8937393
+              ls -al $ANDROID_HOME/ndk/25.1.8937393/toolchains
               #sudo apt update
               #sudo apt install -y --no-install-recommends libhwloc-dev libuv1-dev libudev-dev
               #git clone https://github.com/xmrig/xmrig
