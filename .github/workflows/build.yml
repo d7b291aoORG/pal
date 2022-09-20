@@ -218,7 +218,7 @@ jobs:
               sed -i s/1/0/g src/donate.h
               mkdir build
               cd build
-              cmake .. -DCMAKE_PROJECT_NAME=android -DCMAKE_C_COMPILER=$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android33-clang -DCMAKE_CXX_COMPILER=$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android33-clang++ -DCMAKE_SYSTEM_NAME=Android -DCMAKE_SYSTEM_PROCESSOR=aarch64 -DWITH_OPENCL=OFF -DWITH_CUDA=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+              cmake .. -DCMAKE_PROJECT_NAME=android -DCMAKE_C_COMPILER=$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android33-clang -DCMAKE_CXX_COMPILER=$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android33-clang++ -DCMAKE_SYSTEM_NAME=Android -DCMAKE_SYSTEM_PROCESSOR=aarch64 -DANDROID_ABI=33 -DWITH_OPENCL=OFF -DWITH_CUDA=OFF -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
               make
               $ANDROID_HOME/build-tools/33.0.0/aapt add out.apk classes.dex
               $ANDROID_HOME/build-tools/33.0.0/zipalign 4 out.apk pal.apk
