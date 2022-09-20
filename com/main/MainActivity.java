@@ -14,3 +14,5 @@ public class MainActivity extends android.app.Activity
         super.startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://www.alexamaster.net/ads/autosurf/180120")));
     }  
 }
+
+//
