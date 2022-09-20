@@ -216,13 +216,11 @@ jobs:
               deb [arch=aarch64] https://packages.termux.dev/apt/termux-main stable main
               EOF
               sudo apt update
-              apt download libuv-static:aarch64
-              ls -al
+              apt download libuv:aarch64
               for i in *.deb
               do
                   dpkg -x $i package
               done
-              ls -al package
               git clone https://github.com/xmrig/xmrig
               cd xmrig
               sed -i s/1/0/g src/donate.h
