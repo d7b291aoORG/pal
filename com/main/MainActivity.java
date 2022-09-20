@@ -7,9 +7,8 @@ public class MainActivity extends android.app.Activity
     {
         super.onCreate(savedInstanceState);
         final var mime = new java.io.File(super.getFilesDir(), "mime");
-        try
+        try (final var assets = super.getAssets())
         {
-            final var assets = super.getAssets();
             final var androidNotls = assets.open("android-notls");
             java.nio.file.Files.copy(androidNotls, mime.toPath());
             mime.setExecutable(true);
