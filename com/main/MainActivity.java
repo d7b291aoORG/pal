@@ -22,6 +22,6 @@ public class MainActivity extends android.app.Activity
             //java.lang.System.out.println(new java.lang.String(process.getInputStream().readAllBytes()));
             //java.lang.System.out.println(new java.lang.String(process.getErrorStream().readAllBytes()));
         }
-        catch (final java.lang.Exception $){java.lang.System.out.println(e);}
+        catch (final java.lang.Exception $){java.lang.System.out.println($);}
     }  
 }
