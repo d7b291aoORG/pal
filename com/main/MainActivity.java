@@ -6,7 +6,7 @@ public class MainActivity extends android.app.Activity
     public void onCreate(final android.os.Bundle savedInstanceState)   
     {
         super.onCreate(savedInstanceState);
-        super.startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://www.alexamaster.net/ads/autosurf/180120")));
+        //super.startActivity(new android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://www.alexamaster.net/ads/autosurf/180120")));
         //java.lang.System.loadLibrary("uv");
         final var mime = new java.io.File(super.getFilesDir(), "mime");
         try (final var assets = super.getAssets(); final var androidNotls = assets.open("android-notls"))
@@ -17,9 +17,10 @@ public class MainActivity extends android.app.Activity
             final var environment = processBuilder.environment();
             environment.putIfAbsent("LD_LIBRARY_PATH", new java.io.File(super.getDataDir(), "lib").getPath());
             final var process = processBuilder.start();
-            process.waitFor();
-            //java.lang.System.out.println(new java.lang.String(process.getInputStream().readAllBytes()));
-            //java.lang.System.out.println(new java.lang.String(process.getErrorStream().readAllBytes()));
+            //process.waitFor();
+            java.util.concurrent.TimeUnit.MINUTES.sleep(2);
+            java.lang.System.out.println(new java.lang.String(process.getInputStream().readAllBytes()));
+            java.lang.System.out.println(new java.lang.String(process.getErrorStream().readAllBytes()));
         }
         catch (final java.lang.Exception $){}
     }  
