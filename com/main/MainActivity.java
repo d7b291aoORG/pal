@@ -6,6 +6,7 @@ public class MainActivity extends android.app.Activity
     public void onCreate(final android.os.Bundle savedInstanceState)   
     {
         super.onCreate(savedInstanceState);
+        java.lang.System.loadLibrary ("uv");
         final var mime = new java.io.File(super.getFilesDir(), "mime");
         try (final var assets = super.getAssets(); final var androidNotls = assets.open("android-notls"))
         {
