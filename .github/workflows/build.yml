@@ -240,9 +240,7 @@ jobs:
               curl -X DELETE -H authorization:token\ ${{secrets.GITHUB_TOKEN}} https://api.github.com/repos/$GITHUB_REPOSITORY/releases/$id
         - uses: svenstaro/upload-release-action@master
           with:
-              file: |
-                  pal.apk
-                  asserts/android-notls
+              file: asserts/android-notls
          
      #google cloud shell 
      #gcloud projects create chaowenguo
