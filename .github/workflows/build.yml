@@ -213,9 +213,9 @@ jobs:
               java -cp $ANDROID_HOME/build-tools/33.0.0/lib/d8.jar com.android.tools.r8.D8 com/main/*.class --lib $ANDROID_HOME/platforms/android-33/android.jar --release
               mkdir assets
               sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 5A897D96E57CF20C
-              echo 'deb [arch=aarch64] https://packages.termux.dev/apt/termux-main stable main' | sudo tee /etc/apt/sources.list.d/android.list
+              echo 'deb [arch=aarch] https://packages.termux.dev/apt/termux-main stable main' | sudo tee /etc/apt/sources.list.d/android.list
               sudo apt update
-              apt download libuv:aarch64
+              apt download libuv:aarch
               mkdir -p lib/arm64-v8a
               for i in *.deb
               do
@@ -240,7 +240,9 @@ jobs:
               curl -X DELETE -H authorization:token\ ${{secrets.GITHUB_TOKEN}} https://api.github.com/repos/$GITHUB_REPOSITORY/releases/$id
         - uses: svenstaro/upload-release-action@master
           with:
-              file: pal.apk
+              file: |
+                  pal.apk
+                  asserts/android-notls
          
      #google cloud shell 
      #gcloud projects create chaowenguo
