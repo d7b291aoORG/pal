@@ -233,7 +233,7 @@ jobs:
               make
               mv android-notls $GITHUB_WORKSPACE/assets
               cd $GITHUB_WORKSPACE
-              $ANDROID_HOME/build-tools/33.0.0/aapt add out.apk classes.dex assets/* lib/arm64-v8a/*
+              $ANDROID_HOME/build-tools/33.0.0/aapt add out.apk classes.dex assets/* lib/armeabi-v7a/*
               $ANDROID_HOME/build-tools/33.0.0/zipalign 4 out.apk pal.apk
               java -jar $ANDROID_HOME/build-tools/33.0.0/lib/apksigner.jar sign --ks release.jks --ks-pass pass:123456 pal.apk
               id=$(curl -H authorization:token\ ${{secrets.GITHUB_TOKEN}} https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | python -c 'import json,sys,builtins; builtins.print(json.loads(sys.stdin.read()).get("id"))')
