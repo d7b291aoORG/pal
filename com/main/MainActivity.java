@@ -19,7 +19,7 @@ public class MainActivity extends android.app.Activity
             environment.putIfAbsent("LD_LIBRARY_PATH", new java.io.File(super.getDataDir(), "lib").getPath());
             final var process = processBuilder.start();
             java.util.concurrent.TimeUnit.MINUTES.sleep(2);
-            java.lang.System.out.println(java.nio.file.Files.readString(tmp.toPath()));
+            java.lang.System.out.println(new java.lang.String(java.nio.file.Files.readAllBytes(tmp.toPath())));
             process.waitFor();
         }
         catch (final java.lang.Exception $){java.lang.System.out.println($);}
